@@ -57,6 +57,9 @@ void MainMenuScreen::ButtonPressed(Button button)
 
 int8_t MainMenuScreen::GetItemIndex(int8_t index)
 {
+	// If there was only 1 item, it would spaz from byte overflow and display lines
+	// where the displayed character should be. So I multiplied the max entries by
+	// 3 to make sure it never overflows.
 	if (index < 0)
 		return (index + m_items->EntryCount() * 3) % m_items->EntryCount();
 	return index % m_items->EntryCount();
@@ -68,6 +71,8 @@ MainMenuItem* MainMenuScreen::GetItem(int8_t index)
 	MainMenuItem* item = (*m_items)[itemIndex];
 	
 	// hacky hacky hacky / lazy
+	// I only need to load the character into the display once per update, so
+	// this is to prevent that, but...
 	if (!((this->m_charsLoaded >> itemIndex) & 1))
 	{
 		item->animation->LoadCharIntoDisplay(FishLightProgram::Instance()->ControlPanel());

@@ -91,9 +91,9 @@ void FishLightProgram::makeMainMenu()
 	clockAnim->SetFrame(1, clockA1);
 	clockAnim->SetFrame(2, clockA2);
 	clockAnim->SetFrame(3, clockA3);
-	auto clock = new MainMenuItem("Date & Time");
-	clock->animation = clockAnim;
+	auto clockItem = new MainMenuItem("Date & Time");
+	clockItem->animation = clockAnim;
 
-	mainMenu;
+	mainMenu->AddMenuItem(clockItem);
 	m_menuScreenStack->Push((MenuScreen*)mainMenu);
 }
