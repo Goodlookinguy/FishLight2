@@ -37,6 +37,7 @@ void FishLightProgram::Init()
 	Serial.begin(9600);
 
 	makeMainMenu();
+	RefreshScreen();
 }
 
 void FishLightProgram::Update()
