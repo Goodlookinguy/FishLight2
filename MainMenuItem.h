@@ -18,6 +18,7 @@ public:
 	String name{ "" };
 	MenuAnimation* animation{ nullptr };
 
+
 	MainMenuItem(String name);
 };
 

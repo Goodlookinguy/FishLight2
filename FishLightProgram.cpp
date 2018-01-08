@@ -108,3 +108,20 @@ void FishLightProgram::makeMainMenu()
 	mainMenu->AddMenuItem(lcdItem);
 	m_menuScreenStack->Push((MenuScreen*)mainMenu);
 }
+
+// Display Screen
+//Brightness 100%
+//Idle Cat
+//Confirm  ==>
+//Cancel   ==>
+
+// Date & Time Screen
+//Year  2018
+//Month 1
+//Day   8
+//Hour     12
+//Minute   58
+//Meridian AM
+//Confirm  ==>
+//Cancel   ==>
+

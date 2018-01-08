@@ -10,7 +10,7 @@
 	#include "WProgram.h"
 #endif
 
-enum class Button
+enum class Button : uint8_t
 {
 	None = 0,
 	Left = 1,
