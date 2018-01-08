@@ -26,6 +26,11 @@ Button ButtonManager::ButtonPressToButton(int16_t button) const
 
 	if (InRange(button, ButtonRanges[4 * 2], ButtonRanges[4 * 2 + 1]))
 		return Button::Down;
+	
+#if FIVE_BUTTON_BUILD
+	if (InRange(button, ButtonRanges[5 * 2], ButtonRanges[5 * 2 + 1]))
+		return Button::Enter;
+#endif
 
 	return Button::None;
 }
@@ -64,7 +69,7 @@ void ButtonManager::Update(FishLightProgram* program)
 //	this->UpdateButtonsStatus(program);
 //}
 
-void ButtonManager::Register4ButtonPin(uint8_t pin)
+void ButtonManager::RegisterButtonsPin(uint8_t pin)
 {
 	this->ButtonPin = pin;
 }

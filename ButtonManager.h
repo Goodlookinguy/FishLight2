@@ -16,19 +16,24 @@ class FishLightProgram;
 
 class ButtonManager
 {
-private:
-	//NduinoEvent<ButtonPressedEventArgs>* m_buttonPressed
-	//{ new NduinoEvent<ButtonPressedEventArgs> };
 protected:
-	// He used a 1M Ohm resister and it gives back weird values...
 	const int16_t ButtonRanges[10]
 	{
-		1015, 1023, // idle, none
+		1000, 1023, // idle, none
+#if FIVE_BUTTON_BUILD
+		0, 20, // left (1)
+		400, 420, // right (2)
+		210, 230, // up (3)
+		590, 610, // down (4)
+		805, 825 // enter (5)
+#else
 		5, 20, // left (1)
 		65, 80, // right (2)
 		116, 131, // up (3)
 		165, 180 // down (4)
+#endif
 	};
+	//Left (0-20), Up (210-230), Right (400-420), Down (590-610), Enter (805-825)
 
 	uint8_t ButtonPin = -1;
 	uint64_t LastButtonPressTime = 0;
@@ -39,17 +44,13 @@ protected:
 
 	static bool InRange(int32_t value, int32_t low, int32_t high);
 	Button ButtonPressToButton(int16_t button) const;
-	//void UpdateButtonsStatus(NduinoProgram* program);
 
 public:
 	// ------
-	//uint32_t static UID() { return 1; }
-	//Type UpdateType() override { return Type::PreUpdate; }
 	void Update(FishLightProgram* program);
 	// ------
 
-	void Register4ButtonPin(const uint8_t pin);
-	//NduinoEvent<ButtonPressedEventArgs>& ButtonPressed();
+	void RegisterButtonsPin(const uint8_t pin);
 };
 
 #endif

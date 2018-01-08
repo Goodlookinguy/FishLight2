@@ -10,8 +10,13 @@
 	#include "WProgram.h"
 #endif
 
+////////////////////////////////
+// BUILD OPTIONS
 #define UNO_BUILD false
+#define FIVE_BUTTON_BUILD false
 
+/////////////////////////////////
+// PINS MAPPING
 #define PIN_WHITE_LEDS 11 // white strips
 #define PIN_RBG_LEDS_GREEN 10 // blue of RGB strips
 #define PIN_RBG_LEDS_RED 9 // red of RGB strips
@@ -29,7 +34,8 @@
 #define PIN_CP_ENABLE 4
 #define PIN_CP_D0 3
 #define PIN_CP_D1 2
-#define PIN_CP_D2 1
+// pin 0 & 1 are off limits, he screwed up UNO version
+#define PIN_CP_D2 1 
 #define PIN_CP_D3 0
 #else
 #define PIN_BUTTONS A8
