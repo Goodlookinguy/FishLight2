@@ -32,7 +32,7 @@ void FishLightProgram::Init()
 	m_realTimeClock->begin();
 
 	m_buttonManager = new ButtonManager();
-	m_buttonManager->Register4ButtonPin(PIN_BUTTONS);
+	m_buttonManager->RegisterButtonsPin(PIN_BUTTONS);
 
 	Serial.begin(9600);
 
