@@ -51,7 +51,7 @@ uint8_t clockA3[8] =
 
 /* ========== S C R E E N ========== */
 
-uint8_t screenA1[] =
+uint8_t screenA0[] =
 {
 	0b00000,
 	0b00000,
@@ -63,7 +63,7 @@ uint8_t screenA1[] =
 	0b00000
 };
 
-uint8_t screenA2[] =
+uint8_t screenA1[] =
 {
 	0b00000,
 	0b00000,
@@ -75,7 +75,7 @@ uint8_t screenA2[] =
 	0b00000
 };
 
-uint8_t screenA3[] =
+uint8_t screenA2[] =
 {
 	0b00000,
 	0b00000,
@@ -87,7 +87,7 @@ uint8_t screenA3[] =
 	0b00000
 };
 
-uint8_t screenA4[] =
+uint8_t screenA3[] =
 {
 	0b00000,
 	0b00000,
