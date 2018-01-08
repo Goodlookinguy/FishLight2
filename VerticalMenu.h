@@ -10,17 +10,8 @@
 	#include "WProgram.h"
 #endif
 
-enum class VerticalMenuItemType : uint8_t
-{
-	None = 0,
-};
 
-class VerticalMenuItem
-{
-public:
-	String name{ "" };
-	VerticalMenuItemType type{ VerticalMenuItemType::None };
-};
+
 
 class VerticalMenu
 {
