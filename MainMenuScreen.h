@@ -28,7 +28,7 @@ public:
 
 	void DrawToScreen(FishLightProgram* program) override;
 	void ButtonPressed(Button button) override;
-	void ChangeSelectedItem(int8_t d);
+	//void ChangeSelectedItem(int8_t d);
 	int8_t GetItemIndex(int8_t index);
 	MainMenuItem* GetItem(int8_t index);
 	void AddMenuItem(MainMenuItem* menuItem);

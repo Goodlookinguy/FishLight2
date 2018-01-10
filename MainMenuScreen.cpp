@@ -26,9 +26,11 @@ void MainMenuScreen::DrawToScreen(FishLightProgram* program)
 		cp->print(menuItem->animation->DisplayCharId());
 		cp->print(" ");
 	}
+
 	cp->print("[");
 	cp->print(focusedItem->animation->DisplayCharId());
 	cp->print("] ");
+
 	for (int i = 1; i < 4; ++i)
 	{
 		menuItem = GetItem(m_selectedIndex + i);
@@ -71,8 +73,8 @@ MainMenuItem* MainMenuScreen::GetItem(int8_t index)
 	MainMenuItem* item = (*m_items)[itemIndex];
 	
 	// hacky hacky hacky / lazy
-	// I only need to load the character into the display once per update, so
-	// this is to prevent that, but...
+	// I only need to load the character into the display once per event update,
+	// so this is to prevent reloading every update tick, but...
 	if (!((this->m_charsLoaded >> itemIndex) & 1))
 	{
 		item->animation->LoadCharIntoDisplay(FishLightProgram::Instance()->ControlPanel());
