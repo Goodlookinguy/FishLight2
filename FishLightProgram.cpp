@@ -14,6 +14,13 @@ FishLightProgram::FishLightProgram()
 
 }
 
+FishLightProgram::~FishLightProgram()
+{
+	delete m_controlPanel;
+	delete m_realTimeClock;
+	delete m_buttonManager;
+}
+
 void FishLightProgram::Init()
 {
 	pinMode(PIN_BUTTONS, INPUT_PULLUP); // neccessary

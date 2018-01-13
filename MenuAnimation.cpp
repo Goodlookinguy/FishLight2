@@ -20,6 +20,11 @@ MenuAnimation::MenuAnimation(const uint8_t charId, const uint8_t totalFrames, co
 	this->frames = new TinyArray<uint8_t*>(totalFrames, true);
 }
 
+MenuAnimation::~MenuAnimation()
+{
+	delete this->frames;
+}
+
 void MenuAnimation::SetFrame(const uint8_t id, uint8_t* frameData) const
 {
 	(*this->frames)[id] = frameData;

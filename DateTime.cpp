@@ -8,7 +8,7 @@ const int16_t DateTime::s_monthsInDays[] = { 0, 31, 59, 90, 120, 151, 181, 212, 
 
 int16_t DateTime::daysFromCalendarStart(int16_t year, int8_t month, int8_t day)
 {
-	const uint16_t febFix{ month <= 2 };
+	const int16_t febFix{ month <= 2 };
 	
 	return 5 +
 		(year - 1700) * 365 +

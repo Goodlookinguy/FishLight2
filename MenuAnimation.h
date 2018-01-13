@@ -29,6 +29,7 @@ public:
 	// Initialize the animation at a specific custom character address (0-7)
 	MenuAnimation(const uint8_t charId, const uint8_t totalFrames);
 	MenuAnimation(const uint8_t charId, const uint8_t totalFrames, const uint8_t hertz);
+	~MenuAnimation();
 
 	void SetFrame(const uint8_t id, uint8_t* frameData) const;
 	void Play(const uint8_t initFrame = 0);

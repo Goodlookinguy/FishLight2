@@ -30,6 +30,7 @@ protected:
 
 public:
 	FishLightProgram();
+	~FishLightProgram();
 
 	LiquidCrystal* ControlPanel() const { return m_controlPanel; }
 	DS3231* RealTimeClock() const { return m_realTimeClock; }
