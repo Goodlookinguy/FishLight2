@@ -10,10 +10,7 @@
 	#include "WProgram.h"
 #endif
 
-////////////////////////////////
-// BUILD OPTIONS
-#define UNO_BUILD false
-#define FIVE_BUTTON_BUILD false
+#include "BuildConsts.h"
 
 /////////////////////////////////
 // PINS MAPPING

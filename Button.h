@@ -10,6 +10,8 @@
 	#include "WProgram.h"
 #endif
 
+#include "BuildConsts.h"
+
 enum class Button : uint8_t
 {
 	None = 0,

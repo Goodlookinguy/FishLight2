@@ -110,10 +110,11 @@ void FishLightProgram::makeMainMenu()
 }
 
 // Display Screen
-//Brightness 100%
-//Idle Cat
-//Confirm  ==>
-//Cancel   ==>
+//----------------
+//Brightness  100%
+//Idle         Cat
+//Confirm  ======>
+//Cancel   <======
 
 // Date & Time Screen
 //Year  2018
@@ -121,7 +122,30 @@ void FishLightProgram::makeMainMenu()
 //Day   8
 //Hour     12
 //Minute   58
-//Meridian AM
+//Meridiem AM
 //Confirm  ==>
 //Cancel   ==>
+
+// 5-button multi-element screen concept
+// Date 01/08/2018
+//      XX XX XXXX
+// -> You click enter to focus in on one
+// -> You click enter to unfocus if focused
+// -> You click up/down while focused to inc/dec value(s)
+// Time 06:17:43 PM
+//      XX XX XX XX
+// 
+// Elements would need x coordinate
+// hour->x = 5;
+// minute->x = 8;
+// 
+// Cancel   Confirm
+// XXXXXX   XXXXXXX
+// cancel->x = 0;
+// confirm->x = 9;
+// ----------------
+// Date 01/08/2018
+// Time 06:17:43 PM
+// Cancel   Confirm
+// ----------------
 

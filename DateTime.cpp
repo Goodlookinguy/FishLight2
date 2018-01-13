@@ -19,7 +19,7 @@ int16_t DateTime::daysFromCalendarStart(int16_t year, int8_t month, int8_t day)
 		(day - 1);
 }
 
-bool DateTime::IsLeapYear(int32_t year)
+bool DateTime::IsLeapYear(int16_t year)
 {
 	return (year & 3) == 0 && ((year % 25) != 0 || (year & 15) == 0);
 }
