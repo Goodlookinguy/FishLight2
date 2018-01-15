@@ -36,7 +36,7 @@ protected:
 	//Left (0-20), Up (210-230), Right (400-420), Down (590-610), Enter (805-825)
 
 	uint8_t ButtonPin = -1;
-	uint64_t LastButtonPressTime = 0;
+	uint64_t m_lastButtonPressTime = 0;
 	uint64_t LastButtonActivateTime = 0;
 	const uint16_t SameButtonRegisterWaitTime = 370; // Should be a fairly low value
 	const uint8_t RegisterTime = 6; // Should be a very low value
@@ -49,6 +49,7 @@ public:
 	// ------
 	void Update(FishLightProgram* program);
 	// ------
+	uint64_t LastButtonPressTime() { return this->m_lastButtonPressTime; }
 
 	void RegisterButtonsPin(const uint8_t pin);
 };

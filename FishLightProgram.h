@@ -25,6 +25,7 @@ protected:
 	TinyArray<MenuScreen*>* m_menuScreenStack{ new TinyArray<MenuScreen*>(5, true) };
 
 	bool m_screenNeedsRefresh{ false };
+	bool m_screenOff{ false };
 
 	void makeMainMenu();
 
@@ -32,8 +33,8 @@ public:
 	FishLightProgram();
 	~FishLightProgram();
 
-	LiquidCrystal* ControlPanel() const { return m_controlPanel; }
-	DS3231* RealTimeClock() const { return m_realTimeClock; }
+	LiquidCrystal* ControlPanel() const { return this->m_controlPanel; }
+	DS3231* RealTimeClock() const { return this->m_realTimeClock; }
 
 	void Init();
 	void Update();

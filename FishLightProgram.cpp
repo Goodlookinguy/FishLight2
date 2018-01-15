@@ -28,7 +28,7 @@ void FishLightProgram::Init()
 	analogWrite(PIN_RBG_LEDS_BLUE, (uint8_t)(0.50f * 255));
 	analogWrite(PIN_RBG_LEDS_RED, (uint8_t)(0.75f * 255));
 	analogWrite(PIN_RBG_LEDS_GREEN, (uint8_t)(1.0f * 255));
-	analogWrite(PIN_CP_BACKLIGHT, 75);
+	analogWrite(PIN_CP_BACKLIGHT, 127);
 
 	m_controlPanel = new LiquidCrystal(
 		PIN_CP_RS, PIN_CP_ENABLE,
@@ -42,6 +42,7 @@ void FishLightProgram::Init()
 	m_buttonManager->RegisterButtonsPin(PIN_BUTTONS);
 
 	Serial.begin(9600);
+	//delay(200);
 
 	makeMainMenu();
 	RefreshScreen();
@@ -50,7 +51,6 @@ void FishLightProgram::Init()
 void FishLightProgram::Update()
 {
 	this->m_buttonManager->Update(this);
-	//delay(1);
 
 	// run last
 	if (this->m_screenNeedsRefresh)
@@ -58,10 +58,26 @@ void FishLightProgram::Update()
 		this->m_screenNeedsRefresh = false;
 		m_menuScreenStack->Top()->DrawToScreen(this);
 	}
+
+	// Idling for 2 minutes causes the screen to shut off
+	if ((millis() - this->m_buttonManager->LastButtonPressTime()) > (1000 * 60 * 2))
+	{
+		this->m_controlPanel->noDisplay();
+		analogWrite(PIN_CP_BACKLIGHT, 0);
+		this->m_screenOff = true;
+	}
 }
 
 void FishLightProgram::OnButtonPressed(Button button)
 {
+
+	if (this->m_screenOff)
+	{
+		this->m_controlPanel->display();
+		analogWrite(PIN_CP_BACKLIGHT, 255);
+		this->m_screenOff = false;
+	}
+
 	/*static int16_t count = 0;
 	this->m_controlPanel->clear();
 	this->m_controlPanel->setCursor(0, 0);
@@ -103,7 +119,7 @@ void FishLightProgram::makeMainMenu()
 	clockItem->animation = clockAnim;
 
 	// Display (LCD)
-	auto lcdAnim = new MenuAnimation(0, 4);
+	auto lcdAnim = new MenuAnimation(1, 4);
 	lcdAnim->SetFrame(0, screenA0);
 	lcdAnim->SetFrame(0, screenA1);
 	lcdAnim->SetFrame(0, screenA2);
@@ -111,8 +127,10 @@ void FishLightProgram::makeMainMenu()
 	auto lcdItem = new MainMenuItem("Display");
 	lcdItem->animation = lcdAnim;
 
+	// Add items
 	mainMenu->AddMenuItem(clockItem);
 	mainMenu->AddMenuItem(lcdItem);
+
 	m_menuScreenStack->Push((MenuScreen*)mainMenu);
 }
 

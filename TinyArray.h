@@ -69,8 +69,8 @@ TinyArray<T>::TinyArray(const uint8_t size, const bool memConstrain)
 template <typename T>
 TinyArray<T>::~TinyArray()
 {
-	for (uint8_t i; i < this->m_length; ++i)
-		delete this->m_elements[i];
+	//for (uint8_t i; i < this->m_length; ++i)
+	//	delete this->m_elements[i];
 
 	delete[] this->m_elements;
 	this->m_length = 0;

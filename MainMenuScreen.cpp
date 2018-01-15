@@ -16,27 +16,44 @@ void MainMenuScreen::DrawToScreen(FishLightProgram* program)
 	cp->clear();
 
 	cp->print(focusedItem->name);
-	cp->print(this->m_selectedIndex);
+
+	// issue: library, trying to do setCursor and then createChar = fail, so it has to be done ahead of time
+	// pg 30, 31, etc. in HD44780 datasheets give explanations for what might be going on, but forget it
+
+	for (int8_t i = -3; i < 4; ++i)
+	{
+		auto itemIndex = GetItemIndex(m_selectedIndex + i);
+		menuItem = GetItem(itemIndex);
+
+		// I only need to load the character into the display once per event update,
+		// so this is to prevent reloading every update tick, but...
+		if (!((this->m_charsLoaded >> itemIndex) & 1))
+		{
+			menuItem->animation->LoadCharIntoDisplay(cp);
+			this->m_charsLoaded = this->m_charsLoaded | (1 << itemIndex);
+		}
+	}
+
 	cp->setCursor(0, 1);
 
-	for (int i = 3; i > 0; --i)
+	for (int8_t i = 3; i > 0; --i)
 	{
 		menuItem = GetItem(m_selectedIndex - i);
-		
-		cp->print(menuItem->animation->DisplayCharId());
+		cp->write(menuItem->animation->DisplayCharId());
 		cp->print(" ");
 	}
 
 	cp->print("[");
-	cp->print(focusedItem->animation->DisplayCharId());
+	cp->write(focusedItem->animation->DisplayCharId());
 	cp->print("] ");
 
-	for (int i = 1; i < 4; ++i)
+	for (int8_t i = 1; i < 4; ++i)
 	{
 		menuItem = GetItem(m_selectedIndex + i);
-		cp->print(menuItem->animation->DisplayCharId());
+		cp->write(menuItem->animation->DisplayCharId());
 		cp->print(" ");
 	}
+
 }
 
 void MainMenuScreen::ButtonPressed(Button button)
@@ -63,7 +80,7 @@ int8_t MainMenuScreen::GetItemIndex(int8_t index)
 	// where the displayed character should be. So I multiplied the max entries by
 	// 3 to make sure it never overflows.
 	if (index < 0)
-		return (index + m_items->EntryCount() * 3) % m_items->EntryCount();
+		return (index + m_items->EntryCount() * 2) % m_items->EntryCount();
 	return index % m_items->EntryCount();
 }
 
@@ -71,15 +88,6 @@ MainMenuItem* MainMenuScreen::GetItem(int8_t index)
 {
 	int8_t itemIndex = GetItemIndex(index);
 	MainMenuItem* item = (*m_items)[itemIndex];
-	
-	// hacky hacky hacky / lazy
-	// I only need to load the character into the display once per event update,
-	// so this is to prevent reloading every update tick, but...
-	if (!((this->m_charsLoaded >> itemIndex) & 1))
-	{
-		item->animation->LoadCharIntoDisplay(FishLightProgram::Instance()->ControlPanel());
-		this->m_charsLoaded = this->m_charsLoaded | (1 << itemIndex);
-	}
 
 	return item;
 }

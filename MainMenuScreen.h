@@ -20,7 +20,7 @@
 class MainMenuScreen : MenuScreen
 {
 	int8_t m_charsLoaded{ 0 };
-	uint8_t m_selectedIndex{ 0 };
+	int8_t m_selectedIndex{ 0 };
 	TinyArray<MainMenuItem*>* m_items{ new TinyArray<MainMenuItem*>(7) };
 
 public:

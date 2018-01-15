@@ -24,15 +24,15 @@ public:
 	TinyArray<uint8_t*>* frames{ nullptr };
 	uint8_t totalFrames;
 	int8_t curIndex{ -1 };
-	uint16_t hertz{ 6 }; // Updates per second = 1000/hertz
+	uint16_t hertz{ 4 }; // Updates per second = 1000/hertz
 
 	// Initialize the animation at a specific custom character address (0-7)
 	MenuAnimation(const uint8_t charId, const uint8_t totalFrames);
 	MenuAnimation(const uint8_t charId, const uint8_t totalFrames, const uint8_t hertz);
 	~MenuAnimation();
 
-	void SetFrame(const uint8_t id, uint8_t* frameData) const;
-	void Play(const uint8_t initFrame = 0);
+	void SetFrame(uint8_t id, uint8_t* frameData) const;
+	void Play(uint8_t initFrame = 0);
 	void Stop();
 	void Update(LiquidCrystal* lcdDisplay);
 	void LoadCharIntoDisplay(LiquidCrystal* lcdDisplay);

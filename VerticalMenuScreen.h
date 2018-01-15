@@ -1,8 +1,8 @@
 // VerticalMenu.h
 #pragma once
 
-#ifndef _VERTICALMENU_h
-#define _VERTICALMENU_h
+#ifndef _VERTICALMENUSCREEN_h
+#define _VERTICALMENUSCREEN_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "Arduino.h"
@@ -11,9 +11,7 @@
 #endif
 
 
-
-
-class VerticalMenu
+class VerticalMenuScreen
 {
 	
 };

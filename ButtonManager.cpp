@@ -48,14 +48,14 @@ void ButtonManager::Update(FishLightProgram* program)
 	if (!sameButton)
 	{
 		this->LastButtonPressed = button;
-		this->LastButtonPressTime = millis();
+		this->m_lastButtonPressTime = millis();
 		this->LastButtonActivateTime = 0;
 	}
 
 	if (button == Button::None)
 		return;
 
-	uint64_t timeActive = millis() - this->LastButtonPressTime;
+	uint64_t timeActive = millis() - this->m_lastButtonPressTime;
 	uint64_t waitTime = millis() - this->LastButtonActivateTime;
 	if (timeActive >= this->RegisterTime && waitTime > this->SameButtonRegisterWaitTime)
 	{
