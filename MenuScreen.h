@@ -19,7 +19,7 @@ class MenuScreen
 public:
 	MenuScreen(){};
 	virtual void DrawToScreen(FishLightProgram* program) {}
-	virtual void ButtonPressed(Button button) {}
+	virtual void ButtonPressed(FishLightProgram* program, Button button) {}
 };
 
 

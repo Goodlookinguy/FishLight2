@@ -95,7 +95,7 @@ void FishLightProgram::OnButtonPressed(Button button)
 		this->m_controlPanel->print("Right ");
 
 	this->m_controlPanel->print(++count);*/
-	this->m_menuScreenStack->Top()->ButtonPressed(button);
+	this->m_menuScreenStack->Top()->ButtonPressed(this, button);
 	this->RefreshScreen();
 }
 

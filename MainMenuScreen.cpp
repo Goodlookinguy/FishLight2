@@ -56,7 +56,7 @@ void MainMenuScreen::DrawToScreen(FishLightProgram* program)
 
 }
 
-void MainMenuScreen::ButtonPressed(Button button)
+void MainMenuScreen::ButtonPressed(FishLightProgram* program, Button button)
 {
 	if (button == Button::Left || button == Button::Right)
 	{

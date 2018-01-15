@@ -10,11 +10,16 @@
 	#include "WProgram.h"
 #endif
 
+#include "MenuScreen.h"
 
-class VerticalMenuScreen
+class VerticalMenuScreen : MenuScreen
 {
-	
+public:
+	VerticalMenuScreen();
+	void DrawToScreen(FishLightProgram* program) override;
+	void ButtonPressed(FishLightProgram* program, Button button) override;
 };
+
 
 #endif
 
