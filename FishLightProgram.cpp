@@ -76,6 +76,7 @@ void FishLightProgram::OnButtonPressed(Button button)
 		this->m_controlPanel->display();
 		analogWrite(PIN_CP_BACKLIGHT, 255);
 		this->m_screenOff = false;
+		delay(300); // screen acts funky if you don't wait a bit
 	}
 
 	/*static int16_t count = 0;
