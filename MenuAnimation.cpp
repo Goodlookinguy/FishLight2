@@ -51,7 +51,10 @@ void MenuAnimation::Update(LiquidCrystal* lcdDisplay)
 	double updateRate = 1000.0 / (double)hertz;
 	uint64_t timeRunning = millis() - this->m_startTime;
 	
-	int8_t newIndex = ((int8_t)((double)timeRunning / updateRate) % totalFrames);
+	// so when the byte overflowed, it caused some fun things to happen, casting to int64 prevents this for a while.
+	// It will overflow eventually, but I think the number is high enough to be far out of the range of realism
+	// at a rate of 4 hertz, it would overflow when reaching 2305843009213693935 updates
+	int8_t newIndex = (int8_t)((int64_t)((double)timeRunning / updateRate) % (int64_t)totalFrames);
 
 	if (newIndex == curIndex)
 		return;

@@ -18,6 +18,7 @@ public:
 	VerticalMenuScreen();
 	void DrawToScreen(FishLightProgram* program) override;
 	void ButtonPressed(FishLightProgram* program, Button button) override;
+	void Update(FishLightProgram* program) override;
 };
 
 

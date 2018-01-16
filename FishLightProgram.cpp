@@ -51,6 +51,7 @@ void FishLightProgram::Init()
 void FishLightProgram::Update()
 {
 	this->m_buttonManager->Update(this);
+	this->m_menuScreenStack->Top()->Update(this);
 
 	// run last
 	if (this->m_screenNeedsRefresh)
@@ -60,9 +61,8 @@ void FishLightProgram::Update()
 	}
 
 	// Idling for 2 minutes causes the screen to shut off
-	if ((millis() - this->m_buttonManager->LastButtonPressTime()) > (1000 * 60 * 2))
+	if ((millis() - this->m_buttonManager->LastButtonPressTime()) > (1000 * 60))
 	{
-		this->m_controlPanel->noDisplay();
 		analogWrite(PIN_CP_BACKLIGHT, 0);
 		this->m_screenOff = true;
 	}
@@ -73,10 +73,9 @@ void FishLightProgram::OnButtonPressed(Button button)
 
 	if (this->m_screenOff)
 	{
-		this->m_controlPanel->display();
 		analogWrite(PIN_CP_BACKLIGHT, 255);
 		this->m_screenOff = false;
-		delay(300); // screen acts funky if you don't wait a bit
+		delay(20); // screen acts funky if you don't wait a bit
 	}
 
 	/*static int16_t count = 0;
@@ -116,15 +115,16 @@ void FishLightProgram::makeMainMenu()
 	clockAnim->SetFrame(1, clockA1);
 	clockAnim->SetFrame(2, clockA2);
 	clockAnim->SetFrame(3, clockA3);
+	clockAnim->Play();
 	auto clockItem = new MainMenuItem("Date & Time");
 	clockItem->animation = clockAnim;
 
 	// Display (LCD)
 	auto lcdAnim = new MenuAnimation(1, 4);
 	lcdAnim->SetFrame(0, screenA0);
-	lcdAnim->SetFrame(0, screenA1);
-	lcdAnim->SetFrame(0, screenA2);
-	lcdAnim->SetFrame(0, screenA3);
+	lcdAnim->SetFrame(1, screenA1);
+	lcdAnim->SetFrame(2, screenA2);
+	lcdAnim->SetFrame(3, screenA3);
 	auto lcdItem = new MainMenuItem("Display");
 	lcdItem->animation = lcdAnim;
 

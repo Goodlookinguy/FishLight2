@@ -74,6 +74,12 @@ void MainMenuScreen::ButtonPressed(FishLightProgram* program, Button button)
 	//A B C [D] E F G
 }
 
+void MainMenuScreen::Update(FishLightProgram* program)
+{
+	for (uint8_t i = 0; i < this->m_items->EntryCount(); ++i)
+		GetItem(i)->animation->Update(program->ControlPanel());
+}
+
 int8_t MainMenuScreen::GetItemIndex(int8_t index)
 {
 	// If there was only 1 item, it would spaz from byte overflow and display lines

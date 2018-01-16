@@ -20,6 +20,7 @@ public:
 	MenuScreen(){};
 	virtual void DrawToScreen(FishLightProgram* program) {}
 	virtual void ButtonPressed(FishLightProgram* program, Button button) {}
+	virtual void Update(FishLightProgram* program) {}
 };
 
 

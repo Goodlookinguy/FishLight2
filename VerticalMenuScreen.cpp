@@ -17,3 +17,7 @@ void VerticalMenuScreen::ButtonPressed(FishLightProgram* program, Button button)
 	
 }
 
+void VerticalMenuScreen::Update(FishLightProgram* program)
+{
+}
+
