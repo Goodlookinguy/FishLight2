@@ -27,6 +27,8 @@ protected:
 	bool m_screenNeedsRefresh{ false };
 	bool m_screenOff{ false };
 
+	const uint64_t idleTimeToScreenShutoff{ 1000ULL * 60ULL };
+
 	void makeMainMenu();
 
 public:

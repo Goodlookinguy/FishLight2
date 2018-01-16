@@ -61,7 +61,8 @@ void FishLightProgram::Update()
 	}
 
 	// Idling for 2 minutes causes the screen to shut off
-	if ((millis() - this->m_buttonManager->LastButtonPressTime()) > (1000 * 60))
+	if (!this->m_screenOff &&
+		(millis() - this->m_buttonManager->LastButtonPressTime()) > idleTimeToScreenShutoff)
 	{
 		analogWrite(PIN_CP_BACKLIGHT, 0);
 		this->m_screenOff = true;
@@ -70,7 +71,6 @@ void FishLightProgram::Update()
 
 void FishLightProgram::OnButtonPressed(Button button)
 {
-
 	if (this->m_screenOff)
 	{
 		analogWrite(PIN_CP_BACKLIGHT, 255);
@@ -78,23 +78,6 @@ void FishLightProgram::OnButtonPressed(Button button)
 		delay(20); // screen acts funky if you don't wait a bit
 	}
 
-	/*static int16_t count = 0;
-	this->m_controlPanel->clear();
-	this->m_controlPanel->setCursor(0, 0);
-
-	if (button == Button::Down)
-		this->m_controlPanel->print("Down ");
-
-	else if (button == Button::Left)
-		this->m_controlPanel->print("Left ");
-
-	else if (button == Button::Up)
-		this->m_controlPanel->print("Up ");
-
-	else if (button == Button::Right)
-		this->m_controlPanel->print("Right ");
-
-	this->m_controlPanel->print(++count);*/
 	this->m_menuScreenStack->Top()->ButtonPressed(this, button);
 	this->RefreshScreen();
 }
