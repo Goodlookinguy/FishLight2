@@ -7,14 +7,14 @@
 
 MenuAnimation::MenuAnimation(const uint8_t charId, const uint8_t totalFrames)
 {
-	this->m_charId = charId;
+	this->charId = charId;
 	this->totalFrames = totalFrames;
 	this->frames = new TinyArray<uint8_t*>(totalFrames, true);
 }
 
 MenuAnimation::MenuAnimation(const uint8_t charId, const uint8_t totalFrames, const uint8_t hertz)
 {
-	this->m_charId = charId;
+	this->charId = charId;
 	this->totalFrames = totalFrames;
 	this->hertz = hertz;
 	this->frames = new TinyArray<uint8_t*>(totalFrames, true);
@@ -60,19 +60,14 @@ void MenuAnimation::Update(LiquidCrystal* lcdDisplay)
 		return;
 
 	this->curIndex = newIndex;
-	//lcdDisplay->createChar(this->m_charId, (*this->frames)[this->curIndex]);
+	//lcdDisplay->createChar(this->charId, (*this->frames)[this->curIndex]);
 	this->LoadCharIntoDisplay(lcdDisplay);
 }
 
 void MenuAnimation::LoadCharIntoDisplay(LiquidCrystal* lcdDisplay)
 {
 	this->curIndex = this->curIndex == -1 ? 0 : this->curIndex;
-	lcdDisplay->createChar(this->m_charId, (*this->frames)[this->curIndex]);
-}
-
-int8_t MenuAnimation::DisplayCharId()
-{
-	return this->m_charId;
+	lcdDisplay->createChar(this->charId, (*this->frames)[this->curIndex]);
 }
 
 
