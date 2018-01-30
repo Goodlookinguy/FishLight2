@@ -14,6 +14,8 @@
 
 /////////////////////////////////
 // PINS MAPPING
+
+#if (UNO_BUILD)
 #define PIN_WHITE_LEDS 11 // white strips
 #define PIN_RBG_LEDS_GREEN 10 // blue of RGB strips
 #define PIN_RBG_LEDS_RED 9 // red of RGB strips
@@ -23,7 +25,6 @@
 #define PIN_RTC_DATA SDA
 #define PIN_RTC_SCLK SCL
 
-#if (UNO_BUILD)
 #define PIN_BUTTONS A0
 
 // control panel
@@ -35,6 +36,15 @@
 #define PIN_CP_D2 1 
 #define PIN_CP_D3 0
 #elif (FIVE_BUTTON_BUILD)
+#define PIN_WHITE_LEDS 5 // white strips
+#define PIN_RBG_LEDS_GREEN 6 // blue of RGB strips
+#define PIN_RBG_LEDS_RED 9 // red of RGB strips
+#define PIN_RBG_LEDS_BLUE 10 // green of RGB strips
+#define PIN_CP_BACKLIGHT 11
+
+#define PIN_RTC_DATA SDA
+#define PIN_RTC_SCLK SCL
+
 #define PIN_BUTTONS A8
 
 // control panel
@@ -45,6 +55,15 @@
 #define PIN_CP_D2 A1
 #define PIN_CP_D3 A0
 #else
+#define PIN_WHITE_LEDS 11 // white strips
+#define PIN_RBG_LEDS_GREEN 10 // blue of RGB strips
+#define PIN_RBG_LEDS_RED 9 // red of RGB strips
+#define PIN_RBG_LEDS_BLUE 6 // green of RGB strips
+#define PIN_CP_BACKLIGHT 5
+
+#define PIN_RTC_DATA SDA
+#define PIN_RTC_SCLK SCL
+
 #define PIN_BUTTONS A8
 
 // control panel
