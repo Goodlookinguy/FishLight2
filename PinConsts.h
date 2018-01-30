@@ -34,6 +34,16 @@
 // pin 0 & 1 are off limits, he screwed up UNO version
 #define PIN_CP_D2 1 
 #define PIN_CP_D3 0
+#elif (FIVE_BUTTON_BUILD)
+#define PIN_BUTTONS A8
+
+// control panel
+#define PIN_CP_RS A5
+#define PIN_CP_ENABLE A4
+#define PIN_CP_D0 A3
+#define PIN_CP_D1 A2
+#define PIN_CP_D2 A1
+#define PIN_CP_D3 A0
 #else
 #define PIN_BUTTONS A8
 
