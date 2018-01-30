@@ -5,16 +5,14 @@
 #include "MenuAnimation.h"
 #include "LiquidCrystal.h"
 
-MenuAnimation::MenuAnimation(const uint8_t charId, const uint8_t totalFrames)
+MenuAnimation::MenuAnimation(const uint8_t totalFrames)
 {
-	this->charId = charId;
 	this->totalFrames = totalFrames;
 	this->frames = new TinyArray<uint8_t*>(totalFrames, true);
 }
 
-MenuAnimation::MenuAnimation(const uint8_t charId, const uint8_t totalFrames, const uint8_t hertz)
+MenuAnimation::MenuAnimation(const uint8_t totalFrames, const uint8_t hertz)
 {
-	this->charId = charId;
 	this->totalFrames = totalFrames;
 	this->hertz = hertz;
 	this->frames = new TinyArray<uint8_t*>(totalFrames, true);

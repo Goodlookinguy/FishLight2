@@ -24,11 +24,11 @@ public:
 	uint8_t totalFrames;
 	int8_t curIndex{ -1 };
 	uint16_t hertz{ 4 }; // Updates per second = 1000/hertz
-	uint8_t charId;
+	uint8_t charId{ 0 };
 
 	// Initialize the animation at a specific custom character address (0-7)
-	MenuAnimation(const uint8_t charId, const uint8_t totalFrames);
-	MenuAnimation(const uint8_t charId, const uint8_t totalFrames, const uint8_t hertz);
+	MenuAnimation(const uint8_t totalFrames);
+	MenuAnimation(const uint8_t totalFrames, const uint8_t hertz);
 	~MenuAnimation();
 
 	void SetFrame(uint8_t id, uint8_t* frameData) const;
