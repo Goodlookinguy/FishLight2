@@ -17,22 +17,26 @@ class FishLightProgram;
 class ButtonManager
 {
 protected:
-	const int16_t ButtonRanges[10]
+#if FIVE_BUTTON_BUILD
+	const int16_t ButtonRanges[12]
 	{
 		1000, 1023, // idle, none
-#if FIVE_BUTTON_BUILD
 		0, 20, // left (1)
 		400, 420, // right (2)
 		210, 230, // up (3)
 		590, 610, // down (4)
 		805, 825 // enter (5)
+	};
 #else
+	const int16_t ButtonRanges[10]
+	{
+		1000, 1023, // idle, none
 		5, 20, // left (1)
 		65, 80, // right (2)
 		116, 131, // up (3)
-		165, 180 // down (4)
-#endif
+		165, 180, // down (4)
 	};
+#endif
 	//Left (0-20), Up (210-230), Right (400-420), Down (590-610), Enter (805-825)
 
 	uint8_t ButtonPin = -1;
