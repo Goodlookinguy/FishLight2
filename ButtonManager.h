@@ -21,11 +21,11 @@ protected:
 	const int16_t ButtonRanges[12]
 	{
 		1000, 1023, // idle, none
-		0, 20, // left (1)
-		400, 420, // right (2)
-		210, 230, // up (3)
-		590, 610, // down (4)
-		805, 825 // enter (5)
+		0, 45, // left (1)
+		400, 445, // right (2)
+		210, 255, // up (3)
+		590, 635, // down (4)
+		805, 850 // enter (5)
 	};
 #else
 	const int16_t ButtonRanges[10]
