@@ -103,7 +103,7 @@ void FishLightProgram::makeMainMenu()
 	clockItem->animation = clockAnim;
 
 	// Display (LCD)
-	auto lcdAnim = new MenuAnimation(1, 4);
+	auto lcdAnim = new MenuAnimation(0, 4);
 	lcdAnim->SetFrame(0, screenA0);
 	lcdAnim->SetFrame(1, screenA1);
 	lcdAnim->SetFrame(2, screenA2);

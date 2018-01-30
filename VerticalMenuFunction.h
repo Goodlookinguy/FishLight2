@@ -10,9 +10,9 @@
 	#include "WProgram.h"
 #endif
 
-#include "VerticalMenu.h"
+#include "VerticalMenuScreen.h"
 
-typedef void(* VerticalMenuFunc)(VerticalMenu* verticalMenu);
+typedef void(* VerticalMenuFunc)(VerticalMenuScreen* verticalMenu);
 
 #endif
 
