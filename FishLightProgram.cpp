@@ -8,6 +8,10 @@
 #include "MainMenuScreen.h"
 #include "MenuAnimation.h"
 #include "AllAnimations.h"
+#include "MenuItemFunc.h"
+#include "VerticalMenuScreen.h"
+#include "VerticalMenuItem.h"
+#include "VerticalMenuItemPercent.h"
 
 FishLightProgram::FishLightProgram()
 {
@@ -50,14 +54,21 @@ void FishLightProgram::Init()
 
 void FishLightProgram::Update()
 {
+	if (this->m_popTopScreen)
+	{
+		this->m_popTopScreen = false;
+		auto item = this->menuScreenStack->Pop();
+		delete item;
+	}
+
 	this->m_buttonManager->Update(this);
-	this->m_menuScreenStack->Top()->Update(this);
+	this->menuScreenStack->Top()->Update(this);
 
 	// run last
 	if (this->m_screenNeedsRefresh)
 	{
 		this->m_screenNeedsRefresh = false;
-		m_menuScreenStack->Top()->DrawToScreen(this);
+		menuScreenStack->Top()->DrawToScreen(this);
 	}
 
 	// Idling for 2 minutes causes the screen to shut off
@@ -78,7 +89,7 @@ void FishLightProgram::OnButtonPressed(Button button)
 		delay(20); // screen acts funky if you don't wait a bit
 	}
 
-	this->m_menuScreenStack->Top()->ButtonPressed(this, button);
+	this->menuScreenStack->Top()->ButtonPressed(this, button);
 	this->RefreshScreen();
 }
 
@@ -87,6 +98,44 @@ void FishLightProgram::RefreshScreen()
 	this->m_screenNeedsRefresh = true;
 }
 
+void FishLightProgram::RemoveTopScreen()
+{
+	this->m_popTopScreen = true;
+	this->RefreshScreen();
+}
+
+void OnLcdExit(FishLightProgram* program)
+{
+	program->RemoveTopScreen();
+}
+
+void OnClockEnter(FishLightProgram* program)
+{
+	auto dateTimeMenu = new VerticalMenuScreen();
+
+	auto lightItem = new VerticalMenuItemPercent("Light", 50);
+	lightItem->action = &OnLcdExit;
+
+	dateTimeMenu->AddMenuItem((VerticalMenuItem*)lightItem);
+
+	program->menuScreenStack->Push((MenuScreen*)dateTimeMenu);
+	program->RefreshScreen();
+	//auto mainMenu = new MainMenuScreen();
+	//
+	//auto lcdAnim = new MenuAnimation(4);
+	//lcdAnim->SetFrame(0, screenA0);
+	//lcdAnim->SetFrame(1, screenA1);
+	//lcdAnim->SetFrame(2, screenA2);
+	//lcdAnim->SetFrame(3, screenA3);
+	//lcdAnim->Play();
+	//auto lcdItem = new MainMenuItem("Stylish");
+	//lcdItem->animation = lcdAnim;
+	//lcdItem->action = &OnLcdExit;
+
+	//// Add items
+	//mainMenu->AddMenuItem(lcdItem);
+	//program->menuScreenStack->Push((MenuScreen*)mainMenu);
+}
 
 void FishLightProgram::makeMainMenu()
 {
@@ -101,6 +150,7 @@ void FishLightProgram::makeMainMenu()
 	clockAnim->Play();
 	auto clockItem = new MainMenuItem("Date & Time");
 	clockItem->animation = clockAnim;
+	clockItem->action = &OnClockEnter;
 
 	// Display (LCD)
 	auto lcdAnim = new MenuAnimation(4);
@@ -115,7 +165,7 @@ void FishLightProgram::makeMainMenu()
 	mainMenu->AddMenuItem(clockItem);
 	mainMenu->AddMenuItem(lcdItem);
 
-	m_menuScreenStack->Push((MenuScreen*)mainMenu);
+	menuScreenStack->Push((MenuScreen*)mainMenu);
 }
 
 // Display Screen

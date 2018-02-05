@@ -43,6 +43,7 @@ protected:
 	uint64_t m_lastButtonPressTime = 0;
 	uint64_t LastButtonActivateTime = 0;
 	const uint16_t SameButtonRegisterWaitTime = 370; // Should be a fairly low value
+	const uint16_t m_coolDownTime{ 50 };
 	const uint8_t RegisterTime = 6; // Should be a very low value
 	Button LastButtonPressed = Button::None;
 

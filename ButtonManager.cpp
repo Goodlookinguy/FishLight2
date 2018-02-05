@@ -45,6 +45,9 @@ void ButtonManager::Update(FishLightProgram* program)
 	Button button = this->ButtonPressToButton(rawButton);
 	bool sameButton = this->LastButtonPressed == button;
 	
+	if ((millis() - this->m_lastButtonPressTime) <= this->m_coolDownTime)
+		return;
+
 	if (!sameButton)
 	{
 		this->LastButtonPressed = button;

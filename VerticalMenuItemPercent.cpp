@@ -4,6 +4,7 @@
 
 #include "Math.h"
 #include "VerticalMenuItemPercent.h"
+#include "VerticalMenuScreen.h"
 
 VerticalMenuItemPercent::VerticalMenuItemPercent(const String& name, const int8_t percent) : VerticalMenuItem(name)
 {
@@ -16,12 +17,25 @@ VerticalMenuItemPercent::VerticalMenuItemPercent(const String& name, const int8_
 	this->incrementalChange = incrementalChange;
 }
 
-void VerticalMenuItemPercent::OnPressRight()
+void VerticalMenuItemPercent::DrawToScreen(FishLightProgram* program, VerticalMenuScreen* screen, bool isSelected)
+{
+	auto controlPanel = program->ControlPanel();
+
+	if (isSelected)
+		controlPanel->print(">");
+
+	controlPanel->print(this->name);
+	controlPanel->print(" ");
+	controlPanel->print(this->percent);
+	controlPanel->print("%");
+}
+
+void VerticalMenuItemPercent::OnPressRight(FishLightProgram* program, VerticalMenuScreen* screen)
 {
 	this->percent = Math<int8_t>::Clamp(this->percent + this->incrementalChange, 0, 100);
 }
 
-void VerticalMenuItemPercent::OnPressLeft()
+void VerticalMenuItemPercent::OnPressLeft(FishLightProgram* program, VerticalMenuScreen* screen)
 {
 	this->percent = Math<int8_t>::Clamp(this->percent - this->incrementalChange, 0, 100);
 }

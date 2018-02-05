@@ -10,12 +10,22 @@
 	#include "WProgram.h"
 #endif
 
+#include "Button.h"
+#include "FishLightProgram.h"
+#include "TinyArray.h"
 #include "MenuScreen.h"
+#include "VerticalMenuItem.h"
 
 class VerticalMenuScreen : MenuScreen
 {
+	int8_t m_selectedIndex{ 0 };
+	TinyArray<VerticalMenuItem*>* m_items{ new TinyArray<VerticalMenuItem*>(7) };
+
 public:
 	VerticalMenuScreen();
+
+	void AddMenuItem(VerticalMenuItem* item);
+
 	void DrawToScreen(FishLightProgram* program) override;
 	void ButtonPressed(FishLightProgram* program, Button button) override;
 	void Update(FishLightProgram* program) override;

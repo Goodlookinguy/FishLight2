@@ -22,8 +22,8 @@ protected:
 	LiquidCrystal* m_controlPanel{ nullptr };
 	DS3231* m_realTimeClock{ nullptr };
 	ButtonManager* m_buttonManager{ nullptr };
-	TinyArray<MenuScreen*>* m_menuScreenStack{ new TinyArray<MenuScreen*>(5, true) };
 
+	bool m_popTopScreen{ false };
 	bool m_screenNeedsRefresh{ false };
 	bool m_screenOff{ false };
 
@@ -32,6 +32,8 @@ protected:
 	void makeMainMenu();
 
 public:
+	TinyArray<MenuScreen*>* menuScreenStack{ new TinyArray<MenuScreen*>(5, true) };
+
 	FishLightProgram();
 	~FishLightProgram();
 
@@ -43,6 +45,7 @@ public:
 
 	void OnButtonPressed(Button button);
 	void RefreshScreen();
+	void RemoveTopScreen();
 
 	static FishLightProgram* Instance()
 	{

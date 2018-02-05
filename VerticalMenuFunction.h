@@ -7,12 +7,12 @@
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "Arduino.h"
 #else
-	#include "WProgram.h"
+	#include "WProgram.h" 
 #endif
 
-#include "VerticalMenuScreen.h"
+class VerticalMenuScreen;
 
-typedef void(* VerticalMenuFunc)(VerticalMenuScreen* verticalMenu);
+typedef void(* VerticalMenuFunc)(FishLightProgram* program, VerticalMenuScreen* screen);
 
 #endif
 

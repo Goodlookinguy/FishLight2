@@ -11,13 +11,14 @@
 #endif
 
 #include "MenuAnimation.h"
+#include "MenuItemFunc.h"
 
 class MainMenuItem
 {
 public:
 	String name{ "" };
 	MenuAnimation* animation{ nullptr };
-
+	MenuItemFunc action{ nullptr };
 
 	MainMenuItem(String name);
 };

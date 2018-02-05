@@ -12,7 +12,7 @@
 #include "BuildConsts.h"
 #include "VerticalMenuItem.h"
 
-class VerticalMenuItemPercent : VerticalMenuItem
+class VerticalMenuItemPercent : public VerticalMenuItem
 {
 public:
 	int8_t percent{ 0 };
@@ -21,12 +21,14 @@ public:
 	VerticalMenuItemPercent(const String& name, int8_t percent);
 	VerticalMenuItemPercent(const String& name, int8_t percent, int8_t incrementalChange);
 
-	void OnPressRight() override;
-	void OnPressLeft() override;
-	void OnPressUp() override {};
-	void OnPressDown() override {};
+	void DrawToScreen(FishLightProgram* program, VerticalMenuScreen* screen, bool isSelected) override;
+
+	void OnPressRight(FishLightProgram* program, VerticalMenuScreen* screen) override;
+	void OnPressLeft(FishLightProgram* program, VerticalMenuScreen* screen) override;
+	void OnPressUp(FishLightProgram* program, VerticalMenuScreen* screen) override {};
+	void OnPressDown(FishLightProgram* program, VerticalMenuScreen* screen) override {};
 #if FIVE_BUTTON_BUILD
-	void OnPressEnter() override {};
+	void OnPressEnter(FishLightProgram* program, VerticalMenuScreen* screen) override {};
 #endif
 };
 

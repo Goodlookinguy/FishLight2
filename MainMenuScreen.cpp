@@ -7,6 +7,11 @@
 #include "Button.h"
 //#include "MenuAnimation.h"
 
+// Wrap around icon menu
+//----------------
+//0123456789ABCDEF
+//A B C [D] E F G
+
 void MainMenuScreen::DrawToScreen(FishLightProgram* program)
 {
 	MainMenuItem* menuItem;
@@ -75,8 +80,18 @@ void MainMenuScreen::ButtonPressed(FishLightProgram* program, Button button)
 		GetItem(m_selectedIndex)->animation->Play();
 	}
 
-	//0123456789ABCDEF
-	//A B C [D] E F G
+#if (FIVE_BUTTON_BUILD)
+	const Button registerButton = Button::Enter;
+#else
+	const Button registerButton = Button::Up;
+#endif
+
+	if (button == registerButton)
+	{
+		auto action = GetItem(m_selectedIndex)->action;
+		if (action != nullptr)
+			action(program);
+	}
 }
 
 void MainMenuScreen::Update(FishLightProgram* program)

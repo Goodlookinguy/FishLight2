@@ -10,25 +10,29 @@
 	#include "WProgram.h"
 #endif
 
+#include "FishLightProgram.h"
 #include "BuildConsts.h"
+//#include "VerticalMenuScreen.h"
 #include "VerticalMenuItemType.h"
 #include "VerticalMenuFunction.h"
+#include "MenuItemFunc.h"
 
 class VerticalMenuItem
 {
 public:
 	String name{ "" };
-	VerticalMenuItemType type{ VerticalMenuItemType::None };
-	VerticalMenuFunc* changeAction{ nullptr };
+	MenuItemFunc action{ nullptr };
 
 	VerticalMenuItem(const String& name);
 
-	virtual void OnPressRight() {}
-	virtual void OnPressLeft() {}
-	virtual void OnPressUp() {}
-	virtual void OnPressDown() {}
+	virtual void DrawToScreen(FishLightProgram* program, VerticalMenuScreen* screen, bool isSelected) {}
+
+	virtual void OnPressRight(FishLightProgram* program, VerticalMenuScreen* screen) {}
+	virtual void OnPressLeft(FishLightProgram* program, VerticalMenuScreen* screen) {}
+	virtual void OnPressUp(FishLightProgram* program, VerticalMenuScreen* screen) {}
+	virtual void OnPressDown(FishLightProgram* program, VerticalMenuScreen* screen) {}
 #if FIVE_BUTTON_BUILD
-	virtual void OnPressEnter() {}
+	virtual void OnPressEnter(FishLightProgram* program, VerticalMenuScreen* screen) {}
 #endif
 };
 
