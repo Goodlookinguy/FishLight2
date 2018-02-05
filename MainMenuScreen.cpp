@@ -81,12 +81,12 @@ void MainMenuScreen::ButtonPressed(FishLightProgram* program, Button button)
 	}
 
 #if (FIVE_BUTTON_BUILD)
-	const Button registerButton = Button::Enter;
+	const Button actionButton = Button::Enter;
 #else
-	const Button registerButton = Button::Up;
+	const Button actionButton = Button::Up;
 #endif
 
-	if (button == registerButton)
+	if (button == actionButton)
 	{
 		auto action = GetItem(m_selectedIndex)->action;
 		if (action != nullptr)
