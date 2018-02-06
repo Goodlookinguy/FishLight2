@@ -15,6 +15,7 @@
 #include "ButtonManager.h"
 #include "TinyArray.h"
 #include "MenuScreen.h"
+#include "DisplaySettings.h"
 
 class FishLightProgram
 {
@@ -22,6 +23,7 @@ protected:
 	LiquidCrystal* m_controlPanel{ nullptr };
 	DS3231* m_realTimeClock{ nullptr };
 	ButtonManager* m_buttonManager{ nullptr };
+	DisplaySettings* m_displaySettings{ nullptr };
 
 	bool m_popTopScreen{ false };
 	bool m_screenNeedsRefresh{ false };
@@ -30,6 +32,8 @@ protected:
 	const uint64_t idleTimeToScreenShutoff{ 1000ULL * 60ULL };
 
 	void makeMainMenu();
+	void initEEPROM();
+	void loadSettings();
 
 public:
 	TinyArray<MenuScreen*>* menuScreenStack{ new TinyArray<MenuScreen*>(5, true) };
@@ -39,6 +43,7 @@ public:
 
 	LiquidCrystal* ControlPanel() const { return this->m_controlPanel; }
 	DS3231* RealTimeClock() const { return this->m_realTimeClock; }
+	DisplaySettings* ControlPanelSettings() const { return this->m_displaySettings; }
 
 	void Init();
 	void Update();

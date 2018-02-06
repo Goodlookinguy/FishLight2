@@ -9,6 +9,17 @@ VerticalMenuScreen::VerticalMenuScreen() : MenuScreen()
 {
 }
 
+VerticalMenuScreen::~VerticalMenuScreen()
+{
+	while (this->m_items->EntryCount() > 0)
+	{
+		auto item = this->m_items->Pop();
+		delete item;
+	}
+	
+	delete this->m_items;
+}
+
 void VerticalMenuScreen::AddMenuItem(VerticalMenuItem* item)
 {
 	this->m_items->Push(item);

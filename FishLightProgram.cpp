@@ -12,6 +12,7 @@
 #include "VerticalMenuScreen.h"
 #include "VerticalMenuItem.h"
 #include "VerticalMenuItemPercent.h"
+#include <EEPROM.h>
 
 FishLightProgram::FishLightProgram()
 {
@@ -28,11 +29,13 @@ FishLightProgram::~FishLightProgram()
 void FishLightProgram::Init()
 {
 	pinMode(PIN_BUTTONS, INPUT_PULLUP); // neccessary
-	analogWrite(PIN_WHITE_LEDS, (uint8_t)(0.25f * 255));
-	analogWrite(PIN_RBG_LEDS_BLUE, (uint8_t)(0.50f * 255));
-	analogWrite(PIN_RBG_LEDS_RED, (uint8_t)(0.75f * 255));
-	analogWrite(PIN_RBG_LEDS_GREEN, (uint8_t)(1.0f * 255));
-	analogWrite(PIN_CP_BACKLIGHT, 127);
+	analogWrite(PIN_WHITE_LEDS, 0);
+	analogWrite(PIN_RBG_LEDS_BLUE, 0);
+	analogWrite(PIN_RBG_LEDS_RED, 0);
+	analogWrite(PIN_RBG_LEDS_GREEN, 0);
+	analogWrite(PIN_CP_BACKLIGHT, 0);
+
+	m_displaySettings = new DisplaySettings();
 
 	m_controlPanel = new LiquidCrystal(
 		PIN_CP_RS, PIN_CP_ENABLE,
@@ -46,8 +49,14 @@ void FishLightProgram::Init()
 	m_buttonManager->RegisterButtonsPin(PIN_BUTTONS);
 
 	Serial.begin(9600);
-	//delay(200);
+	
+	const int8_t alreadyInit = EEPROM[0];
+	const bool firstRun = alreadyInit == 0;
 
+	if (firstRun)
+		initEEPROM();
+
+	loadSettings();
 	makeMainMenu();
 	RefreshScreen();
 }
@@ -166,6 +175,28 @@ void FishLightProgram::makeMainMenu()
 	mainMenu->AddMenuItem(lcdItem);
 
 	menuScreenStack->Push((MenuScreen*)mainMenu);
+}
+
+void FishLightProgram::initEEPROM()
+{
+	//EEPROM[0] = 1;
+	EEPROM[1] = 50;
+	EEPROM[2] = 1;
+}
+
+/*
+enum class EEPROMAddr : int16_t
+{
+	Initialized = 0,
+	DisplayBrightness = 1,
+	DisplayIdleType = 2,
+};
+*/
+
+void FishLightProgram::loadSettings()
+{
+	this->m_displaySettings->backlight = EEPROM[1];
+	//this->m_displaySettings->idleScreen = 1;
 }
 
 // Display Screen

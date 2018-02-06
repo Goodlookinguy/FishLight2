@@ -14,7 +14,7 @@
 
 struct DisplaySettings
 {
-	float brightness{ 1.0f };
+	int8_t backlight{ 100 };
 	DisplayIdleScreen idleScreen{ DisplayIdleScreen::Cat };
 };
 

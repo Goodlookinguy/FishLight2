@@ -23,6 +23,7 @@ class VerticalMenuScreen : MenuScreen
 
 public:
 	VerticalMenuScreen();
+	~VerticalMenuScreen();
 
 	void AddMenuItem(VerticalMenuItem* item);
 
