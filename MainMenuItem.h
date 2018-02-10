@@ -18,7 +18,7 @@ class MainMenuItem
 public:
 	String name{ "" };
 	MenuAnimation* animation{ nullptr };
-	MenuItemFunc action{ nullptr };
+	MenuItemFunc enterAction{ nullptr };
 
 	MainMenuItem(String name);
 };

@@ -12,6 +12,7 @@
 #include "VerticalMenuScreen.h"
 #include "VerticalMenuItem.h"
 #include "VerticalMenuItemPercent.h"
+#include "VerticalMenuItemCancelConfirm.h"
 #include <EEPROM.h>
 
 FishLightProgram::FishLightProgram()
@@ -24,6 +25,7 @@ FishLightProgram::~FishLightProgram()
 	delete m_controlPanel;
 	delete m_realTimeClock;
 	delete m_buttonManager;
+	delete m_displaySettings;
 }
 
 void FishLightProgram::Init()
@@ -118,14 +120,25 @@ void OnLcdExit(FishLightProgram* program)
 	program->RemoveTopScreen();
 }
 
+void OnDateTime_BacklightChange(FishLightProgram* program)
+{
+	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	int8_t lightPercentAsInt = ((VerticalMenuItemPercent*)menu->SelectedItem())->percent;
+	float p = (float)lightPercentAsInt / 100.0f;
+	analogWrite(PIN_CP_BACKLIGHT, (int16_t)(p * 255.0f));
+}
+
 void OnClockEnter(FishLightProgram* program)
 {
 	auto dateTimeMenu = new VerticalMenuScreen();
 
 	auto lightItem = new VerticalMenuItemPercent("Light", 50);
-	lightItem->action = &OnLcdExit;
+	lightItem->changeAction = &OnDateTime_BacklightChange;
+
+	auto ccItem = new VerticalMenuItemCancelConfirm();
 
 	dateTimeMenu->AddMenuItem((VerticalMenuItem*)lightItem);
+	dateTimeMenu->AddMenuItem((VerticalMenuItem*)ccItem);
 
 	program->menuScreenStack->Push((MenuScreen*)dateTimeMenu);
 	program->RefreshScreen();
@@ -159,7 +172,7 @@ void FishLightProgram::makeMainMenu()
 	clockAnim->Play();
 	auto clockItem = new MainMenuItem("Date & Time");
 	clockItem->animation = clockAnim;
-	clockItem->action = &OnClockEnter;
+	clockItem->enterAction = &OnClockEnter;
 
 	// Display (LCD)
 	auto lcdAnim = new MenuAnimation(4);

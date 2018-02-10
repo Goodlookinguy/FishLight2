@@ -51,6 +51,9 @@ public:
 	// Shift all contents in the array right by a given value (values can be lost)
 	void ShiftRight(uint8_t shiftBy = 0);
 
+	T Get(const uint8_t index);
+	void Set(const uint8_t index, T value);
+
 	// (Array) Getter
 	T operator[] (const uint32_t index) const;
 
@@ -143,10 +146,25 @@ void TinyArray<T>::ShiftRight(uint8_t shiftBy)
 }
 
 template <typename T>
+T TinyArray<T>::Get(const uint8_t index)
+{
+	if (index >= this->m_length)
+		return this->Nil();
+
+	return this->m_elements[index];
+}
+
+template <typename T>
+void TinyArray<T>::Set(const uint8_t index, T value)
+{
+	this->m_elements[index] = value;
+}
+
+template <typename T>
 T TinyArray<T>::operator[](const uint32_t index) const
 {
 	if (index >= this->m_length)
-		return nullptr;
+		return this->Nil();
 
 	return this->m_elements[index];
 }

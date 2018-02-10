@@ -21,7 +21,9 @@ class VerticalMenuItem
 {
 public:
 	String name{ "" };
-	MenuItemFunc action{ nullptr };
+	MenuItemFunc changeAction{ nullptr };
+	MenuItemFunc confirmAction{ nullptr };
+	MenuItemFunc cancelAction{ nullptr };
 
 	VerticalMenuItem(const String& name);
 
@@ -29,8 +31,6 @@ public:
 
 	virtual void OnPressRight(FishLightProgram* program, VerticalMenuScreen* screen) {}
 	virtual void OnPressLeft(FishLightProgram* program, VerticalMenuScreen* screen) {}
-	virtual void OnPressUp(FishLightProgram* program, VerticalMenuScreen* screen) {}
-	virtual void OnPressDown(FishLightProgram* program, VerticalMenuScreen* screen) {}
 #if FIVE_BUTTON_BUILD
 	virtual void OnPressEnter(FishLightProgram* program, VerticalMenuScreen* screen) {}
 #endif

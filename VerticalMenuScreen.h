@@ -20,12 +20,16 @@ class VerticalMenuScreen : MenuScreen
 {
 	int8_t m_selectedIndex{ 0 };
 	TinyArray<VerticalMenuItem*>* m_items{ new TinyArray<VerticalMenuItem*>(7) };
+	int8_t m_delayedAction{ 0 };
 
 public:
 	VerticalMenuScreen();
 	~VerticalMenuScreen();
 
 	void AddMenuItem(VerticalMenuItem* item);
+	VerticalMenuItem* SelectedItem();
+	void CancelChanges();
+	void ConfirmChanges();
 
 	void DrawToScreen(FishLightProgram* program) override;
 	void ButtonPressed(FishLightProgram* program, Button button) override;

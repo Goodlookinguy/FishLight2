@@ -25,8 +25,8 @@ public:
 
 	void OnPressRight(FishLightProgram* program, VerticalMenuScreen* screen) override;
 	void OnPressLeft(FishLightProgram* program, VerticalMenuScreen* screen) override;
-	void OnPressUp(FishLightProgram* program, VerticalMenuScreen* screen) override {};
-	void OnPressDown(FishLightProgram* program, VerticalMenuScreen* screen) override {};
+	//void OnPressUp(FishLightProgram* program, VerticalMenuScreen* screen) override {};
+	//void OnPressDown(FishLightProgram* program, VerticalMenuScreen* screen) override {};
 #if FIVE_BUTTON_BUILD
 	void OnPressEnter(FishLightProgram* program, VerticalMenuScreen* screen) override {};
 #endif
