@@ -26,6 +26,7 @@ public:
 	VerticalMenuScreen();
 	~VerticalMenuScreen();
 
+	TinyArray<VerticalMenuItem*>* Items() const { return this->m_items; }
 	void AddMenuItem(VerticalMenuItem* item);
 	VerticalMenuItem* SelectedItem();
 	void CancelChanges();

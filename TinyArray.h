@@ -51,7 +51,7 @@ public:
 	// Shift all contents in the array right by a given value (values can be lost)
 	void ShiftRight(uint8_t shiftBy = 0);
 
-	// Removes value at given index and shifts remaining items down
+	// (Stack) Removes value at given index and shifts remaining items down
 	void RemoveAt(const uint8_t index, bool deleteItem = false);
 
 	T Get(const uint8_t index);

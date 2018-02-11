@@ -13,7 +13,7 @@
 ////////////////////////////////
 // BUILD OPTIONS
 #define UNO_BUILD false
-#define FIVE_BUTTON_BUILD false
+#define FIVE_BUTTON_BUILD true
 
 #endif
 

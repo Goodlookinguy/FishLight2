@@ -16,9 +16,12 @@ void OnMainMenu_DateTimeEnter(FishLightProgram* program);
 void OnMainMenu_DisplayEnter(FishLightProgram* program);
 
 // Date Time Menu Events
-void OnDateTime_BacklightChange(FishLightProgram* program);
-void OnDateTime_BacklightConfirm(FishLightProgram* program);
-void OnDateTime_BacklightCancel(FishLightProgram* program);
+void OnDateTime_MonthOrYearChange(FishLightProgram* program);
+
+// Display Menu Events
+void OnDisplay_BacklightChange(FishLightProgram* program);
+void OnDisplay_BacklightConfirm(FishLightProgram* program);
+void OnDisplay_BacklightCancel(FishLightProgram* program);
 
 #endif
 

@@ -83,7 +83,7 @@ void MainMenuScreen::ButtonPressed(FishLightProgram* program, Button button)
 #if (FIVE_BUTTON_BUILD)
 	const Button actionButton = Button::Enter;
 #else
-	const Button actionButton = Button::Up;
+	const Button actionButton = Button::Down;
 #endif
 
 	if (button == actionButton)

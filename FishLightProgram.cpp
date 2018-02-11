@@ -96,7 +96,7 @@ void FishLightProgram::OnButtonPressed(Button button)
 {
 	if (this->m_screenOff)
 	{
-		analogWrite(PIN_CP_BACKLIGHT, 255);
+		analogWrite(PIN_CP_BACKLIGHT, ((float)this->m_displaySettings->backlight / 100.0f) * 255.0f);
 		this->m_screenOff = false;
 		delay(10); // screen acts funky if you don't wait a bit
 	}
@@ -176,16 +176,6 @@ void FishLightProgram::loadSettings()
 //Idle         Cat
 //Confirm  ======>
 //Cancel   <======
-
-// Date & Time Screen
-//Year  2018
-//Month 1
-//Day   8
-//Hour     12
-//Minute   58
-//Meridiem AM
-//Confirm  ==>
-//Cancel   ==>
 
 // 5-button multi-element screen concept
 // Date 01/08/2018
