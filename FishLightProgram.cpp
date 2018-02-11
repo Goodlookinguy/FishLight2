@@ -13,6 +13,7 @@
 #include "VerticalMenuItem.h"
 #include "VerticalMenuItemPercent.h"
 #include "VerticalMenuItemCancelConfirm.h"
+#include "_MenuEvents.h"
 #include <EEPROM.h>
 
 FishLightProgram::FishLightProgram()
@@ -35,7 +36,7 @@ void FishLightProgram::Init()
 	analogWrite(PIN_RBG_LEDS_BLUE, 0);
 	analogWrite(PIN_RBG_LEDS_RED, 0);
 	analogWrite(PIN_RBG_LEDS_GREEN, 0);
-	analogWrite(PIN_CP_BACKLIGHT, 0);
+	analogWrite(PIN_CP_BACKLIGHT, 75);
 
 	m_displaySettings = new DisplaySettings();
 
@@ -97,7 +98,7 @@ void FishLightProgram::OnButtonPressed(Button button)
 	{
 		analogWrite(PIN_CP_BACKLIGHT, 255);
 		this->m_screenOff = false;
-		delay(20); // screen acts funky if you don't wait a bit
+		delay(10); // screen acts funky if you don't wait a bit
 	}
 
 	this->menuScreenStack->Top()->ButtonPressed(this, button);
@@ -115,50 +116,6 @@ void FishLightProgram::RemoveTopScreen()
 	this->RefreshScreen();
 }
 
-void OnLcdExit(FishLightProgram* program)
-{
-	program->RemoveTopScreen();
-}
-
-void OnDateTime_BacklightChange(FishLightProgram* program)
-{
-	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
-	int8_t lightPercentAsInt = ((VerticalMenuItemPercent*)menu->SelectedItem())->percent;
-	float p = (float)lightPercentAsInt / 100.0f;
-	analogWrite(PIN_CP_BACKLIGHT, (int16_t)(p * 255.0f));
-}
-
-void OnClockEnter(FishLightProgram* program)
-{
-	auto dateTimeMenu = new VerticalMenuScreen();
-
-	auto lightItem = new VerticalMenuItemPercent("Light", 50);
-	lightItem->changeAction = &OnDateTime_BacklightChange;
-
-	auto ccItem = new VerticalMenuItemCancelConfirm();
-
-	dateTimeMenu->AddMenuItem((VerticalMenuItem*)lightItem);
-	dateTimeMenu->AddMenuItem((VerticalMenuItem*)ccItem);
-
-	program->menuScreenStack->Push((MenuScreen*)dateTimeMenu);
-	program->RefreshScreen();
-	//auto mainMenu = new MainMenuScreen();
-	//
-	//auto lcdAnim = new MenuAnimation(4);
-	//lcdAnim->SetFrame(0, screenA0);
-	//lcdAnim->SetFrame(1, screenA1);
-	//lcdAnim->SetFrame(2, screenA2);
-	//lcdAnim->SetFrame(3, screenA3);
-	//lcdAnim->Play();
-	//auto lcdItem = new MainMenuItem("Stylish");
-	//lcdItem->animation = lcdAnim;
-	//lcdItem->action = &OnLcdExit;
-
-	//// Add items
-	//mainMenu->AddMenuItem(lcdItem);
-	//program->menuScreenStack->Push((MenuScreen*)mainMenu);
-}
-
 void FishLightProgram::makeMainMenu()
 {
 	auto mainMenu = new MainMenuScreen();
@@ -172,7 +129,7 @@ void FishLightProgram::makeMainMenu()
 	clockAnim->Play();
 	auto clockItem = new MainMenuItem("Date & Time");
 	clockItem->animation = clockAnim;
-	clockItem->enterAction = &OnClockEnter;
+	clockItem->enterAction = &OnMainMenu_DateTimeEnter;
 
 	// Display (LCD)
 	auto lcdAnim = new MenuAnimation(4);
@@ -182,6 +139,7 @@ void FishLightProgram::makeMainMenu()
 	lcdAnim->SetFrame(3, screenA3);
 	auto lcdItem = new MainMenuItem("Display");
 	lcdItem->animation = lcdAnim;
+	lcdItem->enterAction = &OnMainMenu_DisplayEnter;
 
 	// Add items
 	mainMenu->AddMenuItem(clockItem);
@@ -193,8 +151,8 @@ void FishLightProgram::makeMainMenu()
 void FishLightProgram::initEEPROM()
 {
 	//EEPROM[0] = 1;
-	EEPROM[1] = 50;
-	EEPROM[2] = 1;
+	//EEPROM[1] = 50;
+	//EEPROM[2] = 1;
 }
 
 /*

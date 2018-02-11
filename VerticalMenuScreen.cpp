@@ -90,10 +90,10 @@ void VerticalMenuScreen::ButtonPressed(FishLightProgram* program, Button button)
 	if (button == Button::Up || button == Button::Down)
 	{
 		if (button == Button::Up)
-			this->m_selectedIndex = Math<int8_t>::Clamp(this->m_selectedIndex - 1, 0, this->m_items->EntryCount());
+			this->m_selectedIndex = Math<int8_t>::Clamp(this->m_selectedIndex - 1, 0, this->m_items->EntryCount() - 1);
 
 		else if (button == Button::Down)
-			this->m_selectedIndex = Math<int8_t>::Clamp(this->m_selectedIndex + 1, 0, this->m_items->EntryCount());
+			this->m_selectedIndex = Math<int8_t>::Clamp(this->m_selectedIndex + 1, 0, this->m_items->EntryCount() - 1);
 
 		return;
 	}

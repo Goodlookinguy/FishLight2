@@ -26,7 +26,10 @@ void VerticalMenuItemCancelConfirm::DrawToScreen(FishLightProgram* program, Vert
 	}
 	else
 	{
-		cp->print("Cancel  Confirm");
+		if (cancelConfirm)
+			cp->print("Cancel  Confirm");
+		else
+			cp->print(" Cancel  Confirm");
 	}
 }
 

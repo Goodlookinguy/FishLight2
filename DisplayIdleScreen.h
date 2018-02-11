@@ -10,10 +10,10 @@
 	#include "WProgram.h"
 #endif
 
-enum class DisplayIdleScreen : uint8_t
+enum class DisplayIdleScreen : int8_t
 {
 	Cat = 0,
-	Time = 1
+	DateTime = 1
 };
 
 #endif
