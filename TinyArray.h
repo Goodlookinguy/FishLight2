@@ -51,6 +51,9 @@ public:
 	// Shift all contents in the array right by a given value (values can be lost)
 	void ShiftRight(uint8_t shiftBy = 0);
 
+	// Removes value at given index and shifts remaining items down
+	void RemoveAt(const uint8_t index, bool deleteItem = false);
+
 	T Get(const uint8_t index);
 	void Set(const uint8_t index, T value);
 
@@ -143,6 +146,22 @@ template <typename T>
 void TinyArray<T>::ShiftRight(uint8_t shiftBy)
 {
 	//TODO: Implement this function
+}
+
+template <typename T>
+void TinyArray<T>::RemoveAt(const uint8_t index, bool deleteItem)
+{
+	auto item = this->m_elements[index];
+
+	if (deleteItem)
+		delete item;
+
+	for (int8_t i = index + 1; i < this->m_topIndex; ++i)
+		this->m_elements[i - 1] = this->m_elements[i];
+
+	this->m_elements[this->m_topIndex - 1] = this->Nil();
+
+	--this->m_topIndex;
 }
 
 template <typename T>
