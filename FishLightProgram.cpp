@@ -31,14 +31,18 @@ FishLightProgram::~FishLightProgram()
 
 void FishLightProgram::Init()
 {
+	// first
 	pinMode(PIN_BUTTONS, INPUT_PULLUP); // neccessary
+
+	// load up settings from EEPROM
+	m_displaySettings = new DisplaySettings();
+
+	// write from settings
 	analogWrite(PIN_WHITE_LEDS, 0);
 	analogWrite(PIN_RBG_LEDS_BLUE, 0);
 	analogWrite(PIN_RBG_LEDS_RED, 0);
 	analogWrite(PIN_RBG_LEDS_GREEN, 0);
-	analogWrite(PIN_CP_BACKLIGHT, 75);
-
-	m_displaySettings = new DisplaySettings();
+	analogWrite(PIN_CP_BACKLIGHT, this->m_displaySettings->backlightAsPinValue());
 
 	m_controlPanel = new LiquidCrystal(
 		PIN_CP_RS, PIN_CP_ENABLE,
@@ -96,9 +100,10 @@ void FishLightProgram::OnButtonPressed(Button button)
 {
 	if (this->m_screenOff)
 	{
-		analogWrite(PIN_CP_BACKLIGHT, ((float)this->m_displaySettings->backlight / 100.0f) * 255.0f);
+		delay(5);
+		analogWrite(PIN_CP_BACKLIGHT, this->m_displaySettings->backlightAsPinValue());
 		this->m_screenOff = false;
-		delay(10); // screen acts funky if you don't wait a bit
+		delay(5); // screen acts funky if you don't wait a bit
 	}
 
 	this->menuScreenStack->Top()->ButtonPressed(this, button);

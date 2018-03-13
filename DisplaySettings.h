@@ -12,10 +12,21 @@
 
 #include "DisplayIdleScreen.h"
 
-struct DisplaySettings
+class DisplaySettings
 {
+public:
 	int8_t backlight{ 100 };
 	DisplayIdleScreen idleScreen{ DisplayIdleScreen::Cat };
+
+	float backlightAsPercent() const
+	{
+		return (float)backlight / 100.0f;
+	}
+
+	int16_t backlightAsPinValue() const
+	{
+		return backlightAsPercent() * 255.0f;
+	}
 };
 
 #endif

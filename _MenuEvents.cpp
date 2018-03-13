@@ -115,14 +115,14 @@ void OnDisplay_BacklightConfirm(FishLightProgram* program)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	const int8_t lightPercentAsInt = ((VerticalMenuItemPercent*)menu->SelectedItem())->percent;
-	const float p = (float)lightPercentAsInt / 100.0f;
+	auto cpSettings = program->ControlPanelSettings();
 
-	program->ControlPanelSettings()->backlight = lightPercentAsInt;
-	analogWrite(PIN_CP_BACKLIGHT, (int16_t)(p * 255.0f));
+	cpSettings->backlight = lightPercentAsInt;
+	analogWrite(PIN_CP_BACKLIGHT, cpSettings->backlightAsPinValue());
 }
 
 void OnDisplay_BacklightCancel(FishLightProgram* program)
 {
-	const float p = (float)program->ControlPanelSettings()->backlight / 100.0f;
-	analogWrite(PIN_CP_BACKLIGHT, (int16_t)(p * 255.0f));
+	//const float p = (float)program->ControlPanelSettings()->backlight / 100.0f;
+	analogWrite(PIN_CP_BACKLIGHT, program->ControlPanelSettings()->backlightAsPinValue());
 }
