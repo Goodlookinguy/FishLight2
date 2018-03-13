@@ -29,7 +29,7 @@
 //Minute   58
 //Meridiem AM
 //Cancel  Confirm
-void OnMainMenu_DateTimeEnter(FishLightProgram* program)
+void OnMainMenu_DateTimeEnter(FishLightProgram* program, int8_t index)
 {
 	auto dateTimeMenu = new VerticalMenuScreen();
 
@@ -70,11 +70,11 @@ void OnMainMenu_DateTimeEnter(FishLightProgram* program)
 	program->RefreshScreen();
 }
 
-void OnMainMenu_DisplayEnter(FishLightProgram* program)
+void OnMainMenu_DisplayEnter(FishLightProgram* program, int8_t index)
 {
 	auto displayMenu = new VerticalMenuScreen();
 
-	auto lightItem = new VerticalMenuItemPercent("Backlight", 50);
+	auto lightItem = new VerticalMenuItemPercent("Backlight", program->ControlPanelSettings()->backlight);
 	lightItem->changeAction = &OnDisplay_BacklightChange;
 	lightItem->cancelAction = &OnDisplay_BacklightCancel;
 	lightItem->confirmAction = &OnDisplay_BacklightConfirm;
@@ -93,7 +93,7 @@ void OnMainMenu_DisplayEnter(FishLightProgram* program)
 	program->RefreshScreen();
 }
 
-void OnDateTime_MonthOrYearChange(FishLightProgram* program)
+void OnDateTime_MonthOrYearChange(FishLightProgram* program, int8_t index)
 {
 	auto menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto yearItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_YEAR);
@@ -103,26 +103,25 @@ void OnDateTime_MonthOrYearChange(FishLightProgram* program)
 	dayItem->Max( DateTime::DaysInMonth(yearItem->Value(), monthItem->Value()) );
 }
 
-void OnDisplay_BacklightChange(FishLightProgram* program)
+void OnDisplay_BacklightChange(FishLightProgram* program, int8_t index)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	int8_t lightPercentAsInt = ((VerticalMenuItemPercent*)menu->SelectedItem())->percent;
-	float p = (float)lightPercentAsInt / 100.0f;
-	analogWrite(PIN_CP_BACKLIGHT, (int16_t)(p * 255.0f));
+	int16_t p = (int16_t)(((float)lightPercentAsInt / 100.0f) * 255.0f);
+	analogWrite(PIN_CP_BACKLIGHT, p);
 }
 
-void OnDisplay_BacklightConfirm(FishLightProgram* program)
+void OnDisplay_BacklightConfirm(FishLightProgram* program, int8_t index)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
-	const int8_t lightPercentAsInt = ((VerticalMenuItemPercent*)menu->SelectedItem())->percent;
+	const int8_t lightPercentAsInt = ((VerticalMenuItemPercent*)menu->Items()->Get(index))->percent;
 	auto cpSettings = program->ControlPanelSettings();
-
+	
 	cpSettings->backlight = lightPercentAsInt;
 	analogWrite(PIN_CP_BACKLIGHT, cpSettings->backlightAsPinValue());
 }
 
-void OnDisplay_BacklightCancel(FishLightProgram* program)
+void OnDisplay_BacklightCancel(FishLightProgram* program, int8_t index)
 {
-	//const float p = (float)program->ControlPanelSettings()->backlight / 100.0f;
 	analogWrite(PIN_CP_BACKLIGHT, program->ControlPanelSettings()->backlightAsPinValue());
 }

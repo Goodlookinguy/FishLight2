@@ -33,9 +33,12 @@ void FishLightProgram::Init()
 {
 	// first
 	pinMode(PIN_BUTTONS, INPUT_PULLUP); // neccessary
+	Serial.begin(9600);
 
 	// load up settings from EEPROM
 	m_displaySettings = new DisplaySettings();
+		//TODO: temp remove
+	m_displaySettings->backlight = 50;
 
 	// write from settings
 	analogWrite(PIN_WHITE_LEDS, 0);
@@ -54,8 +57,6 @@ void FishLightProgram::Init()
 
 	m_buttonManager = new ButtonManager();
 	m_buttonManager->RegisterButtonsPin(PIN_BUTTONS);
-
-	Serial.begin(9600);
 	
 	const int8_t alreadyInit = EEPROM[0];
 	const bool firstRun = alreadyInit == 0;
@@ -63,22 +64,23 @@ void FishLightProgram::Init()
 	if (firstRun)
 		initEEPROM();
 
-	loadSettings();
+	//loadSettings();
 	makeMainMenu();
 	RefreshScreen();
 }
 
 void FishLightProgram::Update()
 {
+	this->m_buttonManager->Update(this);
+	this->menuScreenStack->Top()->Update(this);
+
 	if (this->m_popTopScreen)
 	{
 		this->m_popTopScreen = false;
-		auto item = this->menuScreenStack->Pop();
+		MenuScreen* item = this->menuScreenStack->Pop();
 		delete item;
+		this->RefreshScreen();
 	}
-
-	this->m_buttonManager->Update(this);
-	this->menuScreenStack->Top()->Update(this);
 
 	// run last
 	if (this->m_screenNeedsRefresh)
@@ -115,10 +117,14 @@ void FishLightProgram::RefreshScreen()
 	this->m_screenNeedsRefresh = true;
 }
 
+void FishLightProgram::CancelRefreshScreen()
+{
+	this->m_screenNeedsRefresh = false;
+}
+
 void FishLightProgram::RemoveTopScreen()
 {
 	this->m_popTopScreen = true;
-	this->RefreshScreen();
 }
 
 void FishLightProgram::makeMainMenu()

@@ -50,6 +50,7 @@ public:
 
 	void OnButtonPressed(Button button);
 	void RefreshScreen();
+	void CancelRefreshScreen();
 	void RemoveTopScreen();
 
 	static FishLightProgram* Instance()

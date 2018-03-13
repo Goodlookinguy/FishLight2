@@ -105,7 +105,7 @@ T TinyArray<T>::Pop()
 	if (this->m_memConstraintMode)
 	{
 		auto value = this->Top();
-		this->m_elements[this->m_topIndex - 1] = this->Nil();
+		this->m_elements[--this->m_topIndex] = this->Nil();
 		return value;
 	}
 

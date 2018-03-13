@@ -77,7 +77,7 @@ void VerticalMenuScreen::ButtonPressed(FishLightProgram* program, Button button)
 
 		auto changeAction = selectedItem->changeAction;
 		if (changeAction != nullptr)
-			changeAction(program);
+			changeAction(program, this->m_selectedIndex);
 
 		return;
 	}
@@ -111,7 +111,7 @@ void VerticalMenuScreen::Update(FishLightProgram* program)
 				auto cancelAction = this->m_items->Get(i)->cancelAction;
 
 				if (cancelAction != nullptr)
-					cancelAction(program);
+					cancelAction(program, i);
 			}
 		}
 		else if (this->m_delayedAction == 2)
@@ -121,12 +121,14 @@ void VerticalMenuScreen::Update(FishLightProgram* program)
 				auto confirmAction = this->m_items->Get(i)->confirmAction;
 
 				if (confirmAction != nullptr)
-					confirmAction(program);
+					confirmAction(program, i);
+
 			}
 		}
 
 		this->m_delayedAction = 0;
 		program->RemoveTopScreen();
+		program->CancelRefreshScreen();
 	}
 }
 

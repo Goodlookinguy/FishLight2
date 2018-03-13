@@ -12,7 +12,7 @@
 
 #include "FishLightProgram.h"
 
-typedef void(* MenuItemFunc)(FishLightProgram* program);
+typedef void(* MenuItemFunc)(FishLightProgram* program, int8_t index);
 
 #endif
 

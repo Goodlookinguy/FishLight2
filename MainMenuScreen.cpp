@@ -90,7 +90,7 @@ void MainMenuScreen::ButtonPressed(FishLightProgram* program, Button button)
 	{
 		auto action = GetItem(m_selectedIndex)->enterAction;
 		if (action != nullptr)
-			action(program);
+			action(program, m_selectedIndex);
 	}
 }
 

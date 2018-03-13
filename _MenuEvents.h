@@ -12,16 +12,16 @@
 #include "FishLightProgram.h"
 
 // Main Menu Events
-void OnMainMenu_DateTimeEnter(FishLightProgram* program);
-void OnMainMenu_DisplayEnter(FishLightProgram* program);
+void OnMainMenu_DateTimeEnter(FishLightProgram* program, int8_t index);
+void OnMainMenu_DisplayEnter(FishLightProgram* program, int8_t index);
 
 // Date Time Menu Events
-void OnDateTime_MonthOrYearChange(FishLightProgram* program);
+void OnDateTime_MonthOrYearChange(FishLightProgram* program, int8_t index);
 
 // Display Menu Events
-void OnDisplay_BacklightChange(FishLightProgram* program);
-void OnDisplay_BacklightConfirm(FishLightProgram* program);
-void OnDisplay_BacklightCancel(FishLightProgram* program);
+void OnDisplay_BacklightChange(FishLightProgram* program, int8_t index);
+void OnDisplay_BacklightConfirm(FishLightProgram* program, int8_t index);
+void OnDisplay_BacklightCancel(FishLightProgram* program, int8_t index);
 
 #endif
 

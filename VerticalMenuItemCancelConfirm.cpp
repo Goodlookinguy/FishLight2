@@ -14,9 +14,9 @@ void VerticalMenuItemCancelConfirm::DrawToScreen(FishLightProgram* program, Vert
 	//0123456789ABCDEF
 	//[Cancel] Confirm
 	//Cancel [Confirm]
-
+	
 	auto cp = program->ControlPanel();
-
+	
 	if (isSelected)
 	{
 		if (cancelConfirm)
