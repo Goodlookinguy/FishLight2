@@ -152,9 +152,20 @@ void FishLightProgram::makeMainMenu()
 	lcdItem->animation = lcdAnim;
 	lcdItem->enterAction = &OnMainMenu_DisplayEnter;
 
+	// Sunlight Settings (LCD)
+	auto sunAnim = new MenuAnimation(4);
+	sunAnim->SetFrame(0, sunA0);
+	sunAnim->SetFrame(1, sunA1);
+	sunAnim->SetFrame(2, sunA2);
+	sunAnim->SetFrame(3, sunA3);
+	auto sunItem = new MainMenuItem("Sunlight");
+	sunItem->animation = sunAnim;
+	//sunItem->enterAction = &OnMainMenu_DisplayEnter;
+
 	// Add items
 	mainMenu->AddMenuItem(clockItem);
 	mainMenu->AddMenuItem(lcdItem);
+	mainMenu->AddMenuItem(sunItem);
 
 	menuScreenStack->Push((MenuScreen*)mainMenu);
 }
@@ -180,6 +191,29 @@ void FishLightProgram::loadSettings()
 	this->m_displaySettings->backlight = EEPROM[1];
 	//this->m_displaySettings->idleScreen = 1;
 }
+
+// Based on the vague doc on light modes, maybe something like this
+// OptimizedFishColorMode
+//  -- nothing specified in doc
+//===
+// OptimizedPlantGrowthMode
+//  -- nothing specified in doc
+//===
+// ShimmeringMode
+//  -- not specified in doc
+//===
+// BasicDayMode
+//  -- Okay, this one has stuff in docs, but it's all vague
+// 
+//===
+// CloudyMode
+//  -- nothing specified in doc, but I thought of some things
+// rateOfClouds = 0.10
+// cloudDarkness = 0.7
+// avgCloudLength = 45
+// 
+// 
+// 
 
 // Display Screen
 //----------------
