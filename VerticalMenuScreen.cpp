@@ -12,6 +12,7 @@ VerticalMenuScreen::VerticalMenuScreen() : MenuScreen()
 
 VerticalMenuScreen::~VerticalMenuScreen()
 {
+	Serial.println("~VerticalMenuScreen()");
 	while (this->m_items->EntryCount() > 0)
 	{
 		auto item = this->m_items->Pop();

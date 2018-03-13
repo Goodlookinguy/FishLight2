@@ -6,19 +6,27 @@ Time  t;
 Time oldt;
 int temp;
 int oldtemp;*/
-
+int32_t time;
 
 void setup()
 {
 	FishLightProgram::Instance()->Init();
+	time = millis();
 }
 
 void loop()
 {
 	FishLightProgram::Instance()->Update();
+
+	if (millis() - time >= 1000)
+	{
+		time = millis();
+		Serial.print("Free RAM: ");
+		Serial.println(freeRam());
+	}
 }
 
-/*
+
 //https://learn.adafruit.com/memories-of-an-arduino/measuring-free-memory
 int freeRam()
 {
@@ -26,7 +34,7 @@ int freeRam()
 	int v;
 	return (int)&v - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
 }
-*/
+
 
 /*
 const int16_t ButtonRanges[10]

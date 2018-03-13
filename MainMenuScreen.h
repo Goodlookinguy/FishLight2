@@ -25,6 +25,7 @@ class MainMenuScreen : MenuScreen
 
 public:
 	MainMenuScreen() : MenuScreen() {}
+	virtual ~MainMenuScreen();
 
 	void DrawToScreen(FishLightProgram* program) override;
 	void ButtonPressed(FishLightProgram* program, Button button) override;

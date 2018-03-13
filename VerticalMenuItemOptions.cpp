@@ -11,6 +11,12 @@ VerticalMenuItemOptions::VerticalMenuItemOptions(const String& name, const uint8
 	this->m_valueItems = new TinyArray<int8_t>(size);
 }
 
+VerticalMenuItemOptions::~VerticalMenuItemOptions()
+{
+	delete this->m_displayValueItems;
+	delete this->m_valueItems;
+}
+
 void VerticalMenuItemOptions::AddOption(const String& displayValue, int8_t value)
 {
 	this->m_displayValueItems->Push(displayValue);

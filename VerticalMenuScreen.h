@@ -24,7 +24,7 @@ class VerticalMenuScreen : MenuScreen
 
 public:
 	VerticalMenuScreen();
-	~VerticalMenuScreen();
+	virtual ~VerticalMenuScreen();
 
 	TinyArray<VerticalMenuItem*>* Items() const { return this->m_items; }
 	void AddMenuItem(VerticalMenuItem* item);

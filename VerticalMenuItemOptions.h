@@ -21,6 +21,7 @@ class VerticalMenuItemOptions : public VerticalMenuItem
 
 public:
 	VerticalMenuItemOptions(const String& name, const uint8_t size);
+	virtual ~VerticalMenuItemOptions();
 
 	void AddOption(const String& displayValue, int8_t value);
 

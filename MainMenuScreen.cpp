@@ -12,6 +12,13 @@
 //0123456789ABCDEF
 //A B C [D] E F G
 
+MainMenuScreen::~MainMenuScreen()
+{
+	for (int8_t i = 0; i < m_items->EntryCount(); ++i)
+		delete m_items->Get(i);
+	delete m_items;
+}
+
 void MainMenuScreen::DrawToScreen(FishLightProgram* program)
 {
 	MainMenuItem* menuItem;

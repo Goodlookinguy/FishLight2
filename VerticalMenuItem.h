@@ -26,6 +26,7 @@ public:
 	MenuItemFunc cancelAction{ nullptr };
 
 	VerticalMenuItem(const String& name);
+	~VerticalMenuItem(){}
 
 	virtual void DrawToScreen(FishLightProgram* program, VerticalMenuScreen* screen, bool isSelected) {}
 

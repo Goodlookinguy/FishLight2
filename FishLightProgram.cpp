@@ -153,11 +153,14 @@ void FishLightProgram::makeMainMenu()
 	lcdItem->enterAction = &OnMainMenu_DisplayEnter;
 
 	// Sunlight Settings (LCD)
-	auto sunAnim = new MenuAnimation(4);
-	sunAnim->SetFrame(0, sunA0);
-	sunAnim->SetFrame(1, sunA1);
-	sunAnim->SetFrame(2, sunA2);
-	sunAnim->SetFrame(3, sunA3);
+	auto sunAnim = new MenuAnimation(6);
+	sunAnim->SetFrame(0, sunA3);
+	sunAnim->SetFrame(1, sunA4);
+	sunAnim->SetFrame(2, sunA5);
+	sunAnim->SetFrame(3, sunA0);
+	sunAnim->SetFrame(4, sunA1);
+	sunAnim->SetFrame(5, sunA2);
+	sunAnim->hertz = 6;
 	auto sunItem = new MainMenuItem("Sunlight");
 	sunItem->animation = sunAnim;
 	//sunItem->enterAction = &OnMainMenu_DisplayEnter;
