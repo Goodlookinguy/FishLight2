@@ -15,6 +15,7 @@
 #include "VerticalMenuItemCancelConfirm.h"
 #include "_MenuEvents.h"
 #include <EEPROM.h>
+#include "Color.h"
 
 FishLightProgram::FishLightProgram()
 {
@@ -40,13 +41,16 @@ void FishLightProgram::Init()
 		//TODO: temp remove
 	m_displaySettings->backlight = 50;
 
-	// write from settings
-	analogWrite(PIN_WHITE_LEDS, 0);
-	analogWrite(PIN_RBG_LEDS_BLUE, 0);
-	analogWrite(PIN_RBG_LEDS_RED, 0);
-	analogWrite(PIN_RBG_LEDS_GREEN, 0);
-	analogWrite(PIN_CP_BACKLIGHT, this->m_displaySettings->backlightAsPinValue());
+	auto color = Color(0, 0, 255, 0);
+	color.b = 255;
 
+	// write from settings
+	analogWrite(PIN_WHITE_LEDS, color.w);
+	analogWrite(PIN_RBG_LEDS_RED, color.r);
+	analogWrite(PIN_RBG_LEDS_GREEN, color.g);
+	analogWrite(PIN_RBG_LEDS_BLUE, color.b);
+	analogWrite(PIN_CP_BACKLIGHT, this->m_displaySettings->backlightAsPinValue());
+	
 	m_controlPanel = new LiquidCrystal(
 		PIN_CP_RS, PIN_CP_ENABLE,
 		PIN_CP_D0, PIN_CP_D1, PIN_CP_D2, PIN_CP_D3);
@@ -165,10 +169,26 @@ void FishLightProgram::makeMainMenu()
 	sunItem->animation = sunAnim;
 	//sunItem->enterAction = &OnMainMenu_DisplayEnter;
 
+	auto colorAnim = new MenuAnimation(10);
+	colorAnim->SetFrame(0, colorA7);
+	colorAnim->SetFrame(1, colorA0);
+	colorAnim->SetFrame(2, colorA1);
+	colorAnim->SetFrame(3, colorA2);
+	colorAnim->SetFrame(4, colorA3);
+	colorAnim->SetFrame(5, colorA4);
+	colorAnim->SetFrame(6, colorA5);
+	colorAnim->SetFrame(7, colorA6);
+	colorAnim->SetFrame(8, colorA7);
+	colorAnim->SetFrame(9, colorA7);
+	colorAnim->hertz = 8;
+	auto colorItem = new MainMenuItem("Color Balance");
+	colorItem->animation = colorAnim;
+
 	// Add items
 	mainMenu->AddMenuItem(clockItem);
 	mainMenu->AddMenuItem(lcdItem);
 	mainMenu->AddMenuItem(sunItem);
+	mainMenu->AddMenuItem(colorItem);
 
 	menuScreenStack->Push((MenuScreen*)mainMenu);
 }

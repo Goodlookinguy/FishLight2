@@ -10,7 +10,7 @@
 #include "VerticalMenuItemCancelConfirm.h"
 #include "DisplayIdleScreen.h"
 #include "VerticalMenuItemOptions.h"
-#include "DateTime.h"
+#include "LuzDateTime.h"
 
 //TODO: Retrieve values from EEPROM to load up default values otherwise it's like constantly resetting
 
@@ -100,7 +100,7 @@ void OnDateTime_MonthOrYearChange(FishLightProgram* program, int8_t index)
 	auto monthItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_MONTH);
 	auto dayItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_DAY);
 
-	dayItem->Max( DateTime::DaysInMonth(yearItem->Value(), monthItem->Value()) );
+	dayItem->Max(LuzDateTime::DaysInMonth(yearItem->Value(), monthItem->Value()) );
 }
 
 void OnDisplay_BacklightChange(FishLightProgram* program, int8_t index)

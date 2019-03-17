@@ -4,11 +4,11 @@
 #ifndef __MENUEVENTS_h
 #define __MENUEVENTS_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+//#if defined(ARDUINO) && ARDUINO >= 100
+//	#include "Arduino.h"
+//#else
+//	#include "WProgram.h"
+//#endif
 #include "FishLightProgram.h"
 
 // Main Menu Events

@@ -42,18 +42,18 @@
 #define PIN_RBG_LEDS_BLUE 10 // green of RGB strips
 #define PIN_CP_BACKLIGHT 11
 
-#define PIN_RTC_DATA SDA
-#define PIN_RTC_SCLK SCL
+#define PIN_RTC_DATA PIN_WIRE_SDA
+#define PIN_RTC_SCLK PIN_WIRE_SCL
 
 #define PIN_BUTTONS A8
 
 // control panel
-#define PIN_CP_RS A5
-#define PIN_CP_ENABLE A4
-#define PIN_CP_D0 A3
-#define PIN_CP_D1 A2
-#define PIN_CP_D2 A1
-#define PIN_CP_D3 A0
+#define PIN_CP_RS PIN_A5
+#define PIN_CP_ENABLE PIN_A4
+#define PIN_CP_D0 PIN_A3
+#define PIN_CP_D1 PIN_A2
+#define PIN_CP_D2 PIN_A1
+#define PIN_CP_D3 PIN_A0
 #else
 #define PIN_WHITE_LEDS 11 // white strips
 #define PIN_RBG_LEDS_GREEN 10 // blue of RGB strips
@@ -61,19 +61,18 @@
 #define PIN_RBG_LEDS_BLUE 6 // green of RGB strips
 #define PIN_CP_BACKLIGHT 5
 
-#define PIN_RTC_DATA SDA
-#define PIN_RTC_SCLK SCL
+#define PIN_RTC_DATA (uint8)PIN_WIRE_SDA
+#define PIN_RTC_SCLK (uint8)PIN_WIRE_SCL
 
-#define PIN_BUTTONS A8
+#define PIN_BUTTONS PIN_A8
 
 // control panel
-#define PIN_CP_RS A0
-#define PIN_CP_ENABLE A1
-#define PIN_CP_D0 A2
-#define PIN_CP_D1 A3
-#define PIN_CP_D2 A4
-#define PIN_CP_D3 A5
+#define PIN_CP_RS PIN_A0
+#define PIN_CP_ENABLE PIN_A1
+#define PIN_CP_D0 PIN_A2
+#define PIN_CP_D1 PIN_A3
+#define PIN_CP_D2 PIN_A4
+#define PIN_CP_D3 PIN_A5
 #endif
 
 #endif
-
