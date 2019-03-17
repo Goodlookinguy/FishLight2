@@ -19,7 +19,7 @@
 #define DATETIMEMENU_DAY 2
 #define DATETIMEMENU_HOUR 3
 #define DATETIMEMENU_MINUTE 4
-#define DATETIMEMENUs_MERIDIEM 5
+#define DATETIMEMENU_MERIDIEM 5
 
 // Date & Time Screen
 //Year  2018
@@ -31,23 +31,27 @@
 //Cancel  Confirm
 void OnMainMenu_DateTimeEnter(FishLightProgram* program, int8_t index)
 {
+	auto time = program->RealTimeClock()->getTime();
+
 	auto dateTimeMenu = new VerticalMenuScreen();
 
-	auto yearItem = new VerticalMenuItemIntRange("Year ", 2018, 2018, 4000);
+	auto yearItem = new VerticalMenuItemIntRange("Year ", time.year, 2018, 4000);
 	yearItem->changeAction = &OnDateTime_MonthOrYearChange;
 
-	auto monthItem = new VerticalMenuItemIntRange("Month", 1, 1, 12);
+	auto monthItem = new VerticalMenuItemIntRange("Month", time.mon, 1, 12);
 	monthItem->changeAction = &OnDateTime_MonthOrYearChange;
 
-	auto dayItem = new VerticalMenuItemIntRange("Day  ", 1, 1, 31);
+	auto dayItem = new VerticalMenuItemIntRange("Day  ", time.date, 1, 31);
 
-	auto hourItem = new VerticalMenuItemIntRange("Hour    ", 1, 1, 12);
+	auto hourItem = new VerticalMenuItemIntRange("Hour    ", time.hour % 12, 1, 12);
 
-	auto minuteItem = new VerticalMenuItemIntRange("Minute  ", 0, 0, 59);
-
+	auto minuteItem = new VerticalMenuItemIntRange("Minute  ", time.min, 0, 59);
+	
 	auto meridiemItem = new VerticalMenuItemOptions("Meridiem", 2);
 	meridiemItem->AddOption("AM", 0);
 	meridiemItem->AddOption("PM", 1);
+	if (time.hour > 12)
+		meridiemItem->ValueIndex(1);
 	//lightItem->changeAction = &OnDisplay_BacklightChange;
 	//lightItem->cancelAction = &OnDisplay_BacklightCancel;
 	//lightItem->confirmAction = &OnDisplay_BacklightConfirm;
@@ -93,14 +97,33 @@ void OnMainMenu_DisplayEnter(FishLightProgram* program, int8_t index)
 	program->RefreshScreen();
 }
 
+void OnMainMenu_DayLightEnter(FishLightProgram* program, int8_t index)
+{
+	auto dayLightMenu = new VerticalMenuScreen();
+
+	auto timeStartHourItem = new VerticalMenuItemIntRange("Hour Start", 0, 0, 23);
+	auto timeStartMinItem = new VerticalMenuItemIntRange("Min Start", 0, 0, 59);
+	
+}
+
 void OnDateTime_MonthOrYearChange(FishLightProgram* program, int8_t index)
 {
 	auto menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto yearItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_YEAR);
 	auto monthItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_MONTH);
 	auto dayItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_DAY);
+	auto hourItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_HOUR);
+	auto minItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_MINUTE);
+	auto merItem = (VerticalMenuItemOptions*)menu->Items()->Get(DATETIMEMENU_MERIDIEM);
+	int8_t isPM = 0;
+
+	if (merItem->Value() == "PM")
+		isPM = 1;
 
 	dayItem->Max(LuzDateTime::DaysInMonth(yearItem->Value(), monthItem->Value()) );
+
+	program->RealTimeClock()->setDate(dayItem->Value(), monthItem->Value(), yearItem->Value());
+	program->RealTimeClock()->setTime(hourItem->Value() + 12 * isPM, minItem->Value(), 0);
 }
 
 void OnDisplay_BacklightChange(FishLightProgram* program, int8_t index)

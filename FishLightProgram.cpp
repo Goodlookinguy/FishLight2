@@ -86,6 +86,8 @@ void FishLightProgram::Update()
 		this->RefreshScreen();
 	}
 
+	updateLight();
+
 	// run last
 	if (this->m_screenNeedsRefresh)
 	{
@@ -100,6 +102,11 @@ void FishLightProgram::Update()
 		analogWrite(PIN_CP_BACKLIGHT, 0);
 		this->m_screenOff = true;
 	}
+}
+
+void FishLightProgram::updateLight()
+{
+	
 }
 
 void FishLightProgram::OnButtonPressed(Button button)
@@ -165,9 +172,9 @@ void FishLightProgram::makeMainMenu()
 	sunAnim->SetFrame(4, sunA1);
 	sunAnim->SetFrame(5, sunA2);
 	sunAnim->hertz = 6;
-	auto sunItem = new MainMenuItem("Sunlight");
+	auto sunItem = new MainMenuItem("Day Light");
 	sunItem->animation = sunAnim;
-	//sunItem->enterAction = &OnMainMenu_DisplayEnter;
+	sunItem->enterAction = &OnMainMenu_DayLightEnter;
 
 	auto colorAnim = new MenuAnimation(10);
 	colorAnim->SetFrame(0, colorA7);

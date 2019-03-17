@@ -24,6 +24,9 @@ public:
 	virtual ~VerticalMenuItemOptions();
 
 	void AddOption(const String& displayValue, int8_t value);
+	String Value() { return this->m_displayValueItems->Get(this->m_selectedIndex); }
+	int8_t ValueIndex() { return m_selectedIndex; }
+	void ValueIndex(int8_t index) { this->m_selectedIndex = index; }
 
 	void DrawToScreen(FishLightProgram* program, VerticalMenuScreen* screen, bool isSelected) override;
 

@@ -45,3 +45,4 @@ void VerticalMenuItemOptions::OnPressRight(FishLightProgram* program, VerticalMe
 {
 	this->m_selectedIndex = Math<int8_t>::Clamp(this->m_selectedIndex + 1, 0, this->m_displayValueItems->EntryCount() - 1);
 }
+

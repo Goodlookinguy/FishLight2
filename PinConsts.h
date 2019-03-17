@@ -61,8 +61,8 @@
 #define PIN_RBG_LEDS_BLUE 6 // green of RGB strips
 #define PIN_CP_BACKLIGHT 5
 
-#define PIN_RTC_DATA (uint8)PIN_WIRE_SDA
-#define PIN_RTC_SCLK (uint8)PIN_WIRE_SCL
+#define PIN_RTC_DATA PIN_WIRE_SDA
+#define PIN_RTC_SCLK PIN_WIRE_SCL
 
 #define PIN_BUTTONS PIN_A8
 

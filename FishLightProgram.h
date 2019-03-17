@@ -35,6 +35,8 @@ protected:
 	void initEEPROM();
 	void loadSettings();
 
+	void updateLight();
+
 public:
 	TinyArray<MenuScreen*>* menuScreenStack{ new TinyArray<MenuScreen*>(5, true) };
 
