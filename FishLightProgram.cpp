@@ -17,6 +17,7 @@
 #include <EEPROM.h>
 #include "Color.h"
 #include <Wire.h>
+#include "Math.h"
 
 FishLightProgram::FishLightProgram()
 {
@@ -42,14 +43,17 @@ void FishLightProgram::Init()
 		//TODO: temp remove
 	m_displaySettings->backlight = 50;
 
-	auto color = Color(0, 0, 255, 0);
-	color.b = 255;
+	m_dayColor = new Color(0, 128, 255, 170);
+	m_nightColor = new Color(0, 20, 20, 0);
 
-	// write from settings
-	analogWrite(PIN_WHITE_LEDS, color.w);
-	analogWrite(PIN_RBG_LEDS_RED, color.r);
-	analogWrite(PIN_RBG_LEDS_GREEN, color.g);
-	analogWrite(PIN_RBG_LEDS_BLUE, color.b);
+	//auto color = Color(0, 0, 255, 0);
+	//color.b = 255;
+
+	//// write from settings
+	//analogWrite(PIN_WHITE_LEDS, color.w);
+	//analogWrite(PIN_RBG_LEDS_RED, color.r);
+	//analogWrite(PIN_RBG_LEDS_GREEN, color.g);
+	//analogWrite(PIN_RBG_LEDS_BLUE, color.b);
 	analogWrite(PIN_CP_BACKLIGHT, this->m_displaySettings->backlightAsPinValue());
 	
 	m_controlPanel = new LiquidCrystal(
@@ -61,6 +65,7 @@ void FishLightProgram::Init()
 	Wire.setClock(400000L);
 
 	m_realTimeClock = new DS3231();
+	m_realTimeClock->setClockMode(false);
 
 	m_buttonManager = new ButtonManager();
 	m_buttonManager->RegisterButtonsPin(PIN_BUTTONS);
@@ -109,7 +114,32 @@ void FishLightProgram::Update()
 
 void FishLightProgram::updateLight()
 {
+	bool bfalse = false;
+	auto rtc = this->m_realTimeClock;
+	uint8_t hour = rtc->getHour(bfalse, bfalse);
+	uint8_t min = rtc->getMinute();
+	uint8_t sec = rtc->getSecond();
 	
+	if ((hour >= 6 && hour <= 7) || (hour >= 20 && hour <= 22))
+	{
+		// derp
+		if (hour == 6 || (hour == 7 && min <= 30 && sec <= 5))
+		{
+			double p = Math<double>::Clamp((((hour - 6) * 60 * 60) + min * 60 + sec) / (60.0 * 90.0), 0.0, 1.0);
+			analogWrite(PIN_WHITE_LEDS, Math<uint8_t>::Lerp(m_nightColor->w, m_dayColor->w, p));
+			analogWrite(PIN_RBG_LEDS_RED, Math<uint8_t>::Lerp(m_nightColor->r, m_dayColor->r, p));
+			analogWrite(PIN_RBG_LEDS_GREEN, Math<uint8_t>::Lerp(m_nightColor->g, m_dayColor->g, p));
+			analogWrite(PIN_RBG_LEDS_BLUE, Math<uint8_t>::Lerp(m_nightColor->b, m_dayColor->b, p));
+		}
+		else if ((hour == 20 && min >= 30) || hour == 21 || (hour == 22 && min == 0 && sec <= 5))
+		{
+			double p = Math<double>::Clamp((((hour - 20) * 60 * 60) + (min - 30) * 60 + sec) / (60.0 * 90.0), 0.0, 1.0);
+			analogWrite(PIN_WHITE_LEDS, Math<uint8_t>::Lerp(m_dayColor->w, m_nightColor->w, p));
+			analogWrite(PIN_RBG_LEDS_RED, Math<uint8_t>::Lerp(m_dayColor->r, m_nightColor->r, p));
+			analogWrite(PIN_RBG_LEDS_GREEN, Math<uint8_t>::Lerp(m_dayColor->g, m_nightColor->g, p));
+			analogWrite(PIN_RBG_LEDS_BLUE, Math<uint8_t>::Lerp(m_dayColor->b, m_nightColor->b, p));
+		}
+	}
 }
 
 void FishLightProgram::OnButtonPressed(Button button)

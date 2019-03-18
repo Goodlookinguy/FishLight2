@@ -16,6 +16,7 @@
 #include "TinyArray.h"
 #include "MenuScreen.h"
 #include "DisplaySettings.h"
+#include "Color.h"
 
 class FishLightProgram
 {
@@ -24,6 +25,9 @@ protected:
 	DS3231* m_realTimeClock{ nullptr };
 	ButtonManager* m_buttonManager{ nullptr };
 	DisplaySettings* m_displaySettings{ nullptr };
+
+	Color* m_dayColor{ nullptr };
+	Color* m_nightColor{ nullptr };
 
 	bool m_popTopScreen{ false };
 	bool m_screenNeedsRefresh{ false };

@@ -32,6 +32,8 @@ public:
 
 	static int16_t StandardTo24Hour(int16_t hour, String timeOfDay);
 	static int16_t MilitaryTo12Hour(int16_t hour);
+
+	static uint64_t ToUnixTime(uint16_t year, uint8_t month, uint8_t day, uint8_t hours, uint8_t minutes, uint8_t seconds);
 };
 
 

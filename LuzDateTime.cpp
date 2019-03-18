@@ -86,4 +86,32 @@ int16_t LuzDateTime::MilitaryTo12Hour(int16_t hour)
 	return stdHour;
 }
 
+uint64_t LuzDateTime::ToUnixTime(uint16_t year, uint8_t month, uint8_t day, uint8_t hours, uint8_t minutes, uint8_t seconds)
+{
+	const uint64_t Jan112019 = 1546300800;
+	auto yearDiff = year - 2019;
+	auto monDiff = month - 1;
+	auto dayDiff = day - 1;
+	int8_t extraDays = 0;
+
+	for (int16_t i = 2019; i <= year; ++i)
+	{
+		if (month > 2)
+		{
+			if (IsLeapYear(i))
+				++extraDays;
+		}
+	}
+
+	uint64_t unixTime = Jan112019;
+	unixTime += yearDiff * 365UL * 24UL * 60UL * 60UL;
+	unixTime += s_monthsInDays[monDiff] * 24UL * 60UL * 60UL;
+	unixTime += dayDiff * 24UL * 60UL * 60UL;
+	unixTime += hours * 60UL * 60UL;
+	unixTime += minutes * 60UL;
+	unixTime += seconds;
+
+	return unixTime;
+}
+
 
