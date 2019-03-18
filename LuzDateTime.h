@@ -29,6 +29,9 @@ public:
 	static int16_t DayOfWeek(int16_t year, int8_t month, int8_t day);
 
 	static int16_t DaysInMonth(int16_t year, int8_t month);
+
+	static int16_t StandardTo24Hour(int16_t hour, String timeOfDay);
+	static int16_t MilitaryTo12Hour(int16_t hour);
 };
 
 

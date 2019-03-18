@@ -31,26 +31,28 @@
 //Cancel  Confirm
 void OnMainMenu_DateTimeEnter(FishLightProgram* program, int8_t index)
 {
-	auto time = program->RealTimeClock()->getTime();
+	bool bfalse = false; // stupid
+	// DS3231 programmer is a shitty programmer
+	auto rtc = program->RealTimeClock();
 
 	auto dateTimeMenu = new VerticalMenuScreen();
 
-	auto yearItem = new VerticalMenuItemIntRange("Year ", time.year, 2018, 4000);
+	auto yearItem = new VerticalMenuItemIntRange("Year ", rtc->getYear(), 2018, 4000);
 	yearItem->changeAction = &OnDateTime_MonthOrYearChange;
 
-	auto monthItem = new VerticalMenuItemIntRange("Month", time.mon, 1, 12);
+	auto monthItem = new VerticalMenuItemIntRange("Month", rtc->getMonth(bfalse), 1, 12);
 	monthItem->changeAction = &OnDateTime_MonthOrYearChange;
 
-	auto dayItem = new VerticalMenuItemIntRange("Day  ", time.date, 1, 31);
+	auto dayItem = new VerticalMenuItemIntRange("Day  ", rtc->getDate(), 1, 31);
 
-	auto hourItem = new VerticalMenuItemIntRange("Hour    ", time.hour % 12, 1, 12);
+	auto hourItem = new VerticalMenuItemIntRange("Hour    ", LuzDateTime::MilitaryTo12Hour(rtc->getHour(bfalse, bfalse)), 1, 12);
 
-	auto minuteItem = new VerticalMenuItemIntRange("Minute  ", time.min, 0, 59);
+	auto minuteItem = new VerticalMenuItemIntRange("Minute  ", rtc->getMinute(), 0, 59);
 	
 	auto meridiemItem = new VerticalMenuItemOptions("Meridiem", 2);
 	meridiemItem->AddOption("AM", 0);
 	meridiemItem->AddOption("PM", 1);
-	if (time.hour > 12)
+	if (rtc->getHour(bfalse, bfalse) > 12)
 		meridiemItem->ValueIndex(1);
 	//lightItem->changeAction = &OnDisplay_BacklightChange;
 	//lightItem->cancelAction = &OnDisplay_BacklightCancel;
@@ -115,15 +117,16 @@ void OnDateTime_MonthOrYearChange(FishLightProgram* program, int8_t index)
 	auto hourItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_HOUR);
 	auto minItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_MINUTE);
 	auto merItem = (VerticalMenuItemOptions*)menu->Items()->Get(DATETIMEMENU_MERIDIEM);
-	int8_t isPM = 0;
-
-	if (merItem->Value() == "PM")
-		isPM = 1;
-
+	
 	dayItem->Max(LuzDateTime::DaysInMonth(yearItem->Value(), monthItem->Value()) );
 
-	program->RealTimeClock()->setDate(dayItem->Value(), monthItem->Value(), yearItem->Value());
-	program->RealTimeClock()->setTime(hourItem->Value() + 12 * isPM, minItem->Value(), 0);
+	program->RealTimeClock()->setYear(yearItem->Value());
+	program->RealTimeClock()->setMonth(monthItem->Value());
+	program->RealTimeClock()->setDate(dayItem->Value());
+	program->RealTimeClock()->setHour(LuzDateTime::StandardTo24Hour(hourItem->Value(), merItem->Value()));
+	program->RealTimeClock()->setMinute(minItem->Value());
+	//program->RealTimeClock()->setDate((uint8_t)dayItem->Value(), (uint8_t)monthItem->Value(), (uint16_t)yearItem->Value());
+	//program->RealTimeClock()->setTime((uint8_t)LuzDateTime::StandardTo24Hour(hourItem->Value(), merItem->Value()), (uint8_t)minItem->Value(), (uint8_t)0);
 }
 
 void OnDisplay_BacklightChange(FishLightProgram* program, int8_t index)

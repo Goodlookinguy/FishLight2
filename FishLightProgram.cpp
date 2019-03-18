@@ -16,6 +16,7 @@
 #include "_MenuEvents.h"
 #include <EEPROM.h>
 #include "Color.h"
+#include <Wire.h>
 
 FishLightProgram::FishLightProgram()
 {
@@ -56,8 +57,10 @@ void FishLightProgram::Init()
 		PIN_CP_D0, PIN_CP_D1, PIN_CP_D2, PIN_CP_D3);
 	m_controlPanel->begin(16, 2);
 
-	m_realTimeClock = new DS3231(PIN_RTC_DATA, PIN_RTC_SCLK);
-	m_realTimeClock->begin();
+	Wire.begin();
+	Wire.setClock(400000L);
+
+	m_realTimeClock = new DS3231();
 
 	m_buttonManager = new ButtonManager();
 	m_buttonManager->RegisterButtonsPin(PIN_BUTTONS);
@@ -274,4 +277,3 @@ void FishLightProgram::loadSettings()
 // Time 06:17:43 PM
 // Cancel   Confirm
 // ----------------
-

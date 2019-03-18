@@ -29,6 +29,8 @@ bool LuzDateTime::TimeOfDay(uint8_t hour)
 	return hour >= 12;
 }
 
+
+
 String LuzDateTime::Meridiem(bool timeOfDay)
 {
 	if (timeOfDay)
@@ -61,6 +63,27 @@ int16_t LuzDateTime::DaysInMonth(int16_t year, int8_t month)
 		month > 7 && (month % 2) == 0)
 		return 31;
 	return 30;
+}
+
+int16_t LuzDateTime::StandardTo24Hour(int16_t hour, String timeOfDay)
+{
+	if (hour == 12)
+		hour = 0;
+
+	if (timeOfDay == "AM")
+	{
+		return hour;
+	}
+
+	return hour + 12;
+}
+
+int16_t LuzDateTime::MilitaryTo12Hour(int16_t hour)
+{
+	auto stdHour = hour % 12;
+	if (stdHour == 0)
+		return 12;
+	return stdHour;
 }
 
 
