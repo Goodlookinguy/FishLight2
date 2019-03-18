@@ -26,7 +26,9 @@ protected:
 	ButtonManager* m_buttonManager{ nullptr };
 	DisplaySettings* m_displaySettings{ nullptr };
 
+	Color* m_morningColor{ nullptr };
 	Color* m_dayColor{ nullptr };
+	Color* m_eveningColor{ nullptr };
 	Color* m_nightColor{ nullptr };
 
 	bool m_popTopScreen{ false };
@@ -34,6 +36,7 @@ protected:
 	bool m_screenOff{ false };
 
 	const uint64_t idleTimeToScreenShutoff{ 1000ULL * 60ULL };
+	uint64_t startTime = 0;
 
 	void makeMainMenu();
 	void initEEPROM();

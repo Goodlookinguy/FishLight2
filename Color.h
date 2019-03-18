@@ -10,12 +10,17 @@
 	#include "WProgram.h"
 #endif
 
+#include "Math.h"
+
 class Color
 {
 	const double RED_STRENGTH{ 1.0 };
 	const double GREEN_STRENGTH{ 0.6 };
 	const double BLUE_STRENGTH{ 0.3 };
 public:
+	double rStr = RED_STRENGTH;
+	double gStr = GREEN_STRENGTH;
+	double bStr = BLUE_STRENGTH;
 	uint8_t r;
 	uint8_t g;
 	uint8_t b;
@@ -23,6 +28,14 @@ public:
 
 	Color(uint8_t r, uint8_t g, uint8_t b, uint8_t w)
 	{
+		Set(r, g, b, w);
+	}
+
+	Color(uint8_t r, uint8_t g, uint8_t b, uint8_t w, double redStrength, double greenStrength, double blueStrength)
+	{
+		rStr = redStrength;
+		gStr = greenStrength;
+		bStr = blueStrength;
 		Set(r, g, b, w);
 	}
 
@@ -36,17 +49,17 @@ public:
 
 	void SetR(uint8_t r)
 	{
-		this->r = r * RED_STRENGTH;
+		this->r = r * rStr;
 	}
 
 	void SetG(uint8_t g)
 	{
-		this->g = g * GREEN_STRENGTH;
+		this->g = g * gStr;
 	}
 
 	void SetB(uint8_t b)
 	{
-		this->b = b * BLUE_STRENGTH;
+		this->b = b * bStr;
 	}
 
 	static Color* White()
