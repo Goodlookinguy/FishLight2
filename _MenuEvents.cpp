@@ -37,19 +37,23 @@ void OnMainMenu_DateTimeEnter(FishLightProgram* program, int8_t index)
 
 	auto dateTimeMenu = new VerticalMenuScreen();
 
-	auto yearItem = new VerticalMenuItemIntRange("Year ", rtc->getYear(), 2018, 4000);
-	yearItem->changeAction = &OnDateTime_MonthOrYearChange;
+	auto yearItem = new VerticalMenuItemIntRange("Year ", rtc->getYear() + 2000, 2018, 4000);
+	yearItem->changeAction = &OnDateTime_YearChange;
 
 	auto monthItem = new VerticalMenuItemIntRange("Month", rtc->getMonth(bfalse), 1, 12);
-	monthItem->changeAction = &OnDateTime_MonthOrYearChange;
+	monthItem->changeAction = &OnDateTime_MonthChange;
 
 	auto dayItem = new VerticalMenuItemIntRange("Day  ", rtc->getDate(), 1, 31);
+	dayItem->changeAction = &OnDateTime_DayChange;
 
 	auto hourItem = new VerticalMenuItemIntRange("Hour    ", LuzDateTime::MilitaryTo12Hour(rtc->getHour(bfalse, bfalse)), 1, 12);
+	hourItem->changeAction = &OnDateTime_HourOrMeridiemChange;
 
 	auto minuteItem = new VerticalMenuItemIntRange("Minute  ", rtc->getMinute(), 0, 59);
+	minuteItem->changeAction = &OnDateTime_MinuteChange;
 	
 	auto meridiemItem = new VerticalMenuItemOptions("Meridiem", 2);
+	meridiemItem->changeAction = &OnDateTime_HourOrMeridiemChange;
 	meridiemItem->AddOption("AM", 0);
 	meridiemItem->AddOption("PM", 1);
 	if (rtc->getHour(bfalse, bfalse) > 12)
@@ -108,25 +112,44 @@ void OnMainMenu_DayLightEnter(FishLightProgram* program, int8_t index)
 	
 }
 
-void OnDateTime_MonthOrYearChange(FishLightProgram* program, int8_t index)
+void OnDateTime_YearChange(FishLightProgram* program, int8_t index)
 {
 	auto menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto yearItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_YEAR);
-	auto monthItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_MONTH);
-	auto dayItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_DAY);
-	auto hourItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_HOUR);
-	auto minItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_MINUTE);
-	auto merItem = (VerticalMenuItemOptions*)menu->Items()->Get(DATETIMEMENU_MERIDIEM);
-	
-	dayItem->Max(LuzDateTime::DaysInMonth(yearItem->Value(), monthItem->Value()) );
 
-	program->RealTimeClock()->setYear(yearItem->Value());
+	program->RealTimeClock()->setYear(yearItem->Value() - 2000);
+}
+
+void OnDateTime_MonthChange(FishLightProgram* program, int8_t index)
+{
+	auto menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	auto monthItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_MONTH);
 	program->RealTimeClock()->setMonth(monthItem->Value());
-	program->RealTimeClock()->setDate(dayItem->Value());
+}
+
+void OnDateTime_DayChange(FishLightProgram* program, int8_t index)
+{
+	bool stupid = false;
+	auto rtc = program->RealTimeClock();
+	auto menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	auto dayItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_DAY);
+	dayItem->Max(LuzDateTime::DaysInMonth(rtc->getYear() + 2000, rtc->getMonth(stupid)));
+	rtc->setDate(dayItem->Value());
+}
+
+void OnDateTime_HourOrMeridiemChange(FishLightProgram* program, int8_t index)
+{
+	auto menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	auto hourItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_HOUR);
+	auto merItem = (VerticalMenuItemOptions*)menu->Items()->Get(DATETIMEMENU_MERIDIEM);
 	program->RealTimeClock()->setHour(LuzDateTime::StandardTo24Hour(hourItem->Value(), merItem->Value()));
+}
+
+void OnDateTime_MinuteChange(FishLightProgram* program, int8_t index)
+{
+	auto menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	auto minItem = (VerticalMenuItemIntRange*)menu->Items()->Get(DATETIMEMENU_MINUTE);
 	program->RealTimeClock()->setMinute(minItem->Value());
-	//program->RealTimeClock()->setDate((uint8_t)dayItem->Value(), (uint8_t)monthItem->Value(), (uint16_t)yearItem->Value());
-	//program->RealTimeClock()->setTime((uint8_t)LuzDateTime::StandardTo24Hour(hourItem->Value(), merItem->Value()), (uint8_t)minItem->Value(), (uint8_t)0);
 }
 
 void OnDisplay_BacklightChange(FishLightProgram* program, int8_t index)

@@ -17,7 +17,11 @@ void OnMainMenu_DisplayEnter(FishLightProgram* program, int8_t index);
 void OnMainMenu_DayLightEnter(FishLightProgram* program, int8_t index);
 
 // Date Time Menu Events
-void OnDateTime_MonthOrYearChange(FishLightProgram* program, int8_t index);
+void OnDateTime_YearChange(FishLightProgram* program, int8_t index);
+void OnDateTime_MonthChange(FishLightProgram* program, int8_t index);
+void OnDateTime_DayChange(FishLightProgram* program, int8_t index);
+void OnDateTime_HourOrMeridiemChange(FishLightProgram* program, int8_t index);
+void OnDateTime_MinuteChange(FishLightProgram* program, int8_t index);
 
 // Display Menu Events
 void OnDisplay_BacklightChange(FishLightProgram* program, int8_t index);

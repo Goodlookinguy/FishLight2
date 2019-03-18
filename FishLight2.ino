@@ -20,8 +20,8 @@ void loop()
 	if (millis() - time >= 1000)
 	{
 		time = millis();
-		Serial.print("Free RAM: ");
-		Serial.println(freeRam());
+		//Serial.print("Free RAM: ");
+		//Serial.println(freeRam());
 	}
 }
 
