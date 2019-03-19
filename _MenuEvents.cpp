@@ -107,9 +107,76 @@ void OnMainMenu_DayLightEnter(FishLightProgram* program, int8_t index)
 {
 	auto dayLightMenu = new VerticalMenuScreen();
 
-	auto timeStartHourItem = new VerticalMenuItemIntRange("Hour Start", 0, 0, 23);
-	auto timeStartMinItem = new VerticalMenuItemIntRange("Min Start", 0, 0, 59);
+	//auto timeStartHourItem = new VerticalMenuItemIntRange("Hour Start", 0, 0, 23);
+	//auto timeStartMinItem = new VerticalMenuItemIntRange("Min Start", 0, 0, 59);
+	auto redItem = new VerticalMenuItemIntRange("Red", 0, 0, 255);
+	redItem->changeAction = &OnDayLight_RedChange;
+
+	auto redStrItem = new VerticalMenuItemPercent("Red Str", 0, 1);
+	redStrItem->changeAction = &OnDayLight_RedStrengthChange;
 	
+	auto greenItem = new VerticalMenuItemIntRange("Green", 0, 0, 255);
+	greenItem->changeAction = &OnDayLight_GreenChange;
+
+	auto greenStrItem = new VerticalMenuItemPercent("Green Str", 0, 1);
+	greenStrItem->changeAction = &OnDayLight_GreenStrengthChange;
+	
+	auto blueItem = new VerticalMenuItemIntRange("Blue", 0, 0, 255);
+	blueItem->changeAction = &OnDayLight_BlueChange;
+
+	auto blueStrItem = new VerticalMenuItemPercent("Blue Str", 0, 1);
+	blueStrItem->changeAction = &OnDayLight_BlueStrengthChange;
+
+	auto ccItem = new VerticalMenuItemCancelConfirm();
+	
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)redItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)redStrItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)greenItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)greenStrItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)blueItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)blueStrItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)ccItem);
+
+	program->menuScreenStack->Push((MenuScreen*)dayLightMenu);
+	program->RefreshScreen();
+}
+
+void OnMainMenu_ColorBalanceEnter(FishLightProgram* program, int8_t index)
+{
+	auto dayLightMenu = new VerticalMenuScreen();
+
+	//auto timeStartHourItem = new VerticalMenuItemIntRange("Hour Start", 0, 0, 23);
+	//auto timeStartMinItem = new VerticalMenuItemIntRange("Min Start", 0, 0, 59);
+	auto redItem = new VerticalMenuItemIntRange("Red S", 0, 0, 255);
+	redItem->changeAction = &OnDayLight_RedChange;
+
+	auto redStrItem = new VerticalMenuItemPercent("Red Str S", 0, 1);
+	redStrItem->changeAction = &OnDayLight_RedStrengthChange;
+
+	auto greenItem = new VerticalMenuItemIntRange("Green S", 0, 0, 255);
+	greenItem->changeAction = &OnDayLight_GreenChange;
+
+	auto greenStrItem = new VerticalMenuItemPercent("Green Str S", 0, 1);
+	greenStrItem->changeAction = &OnDayLight_GreenStrengthChange;
+
+	auto blueItem = new VerticalMenuItemIntRange("Blue S", 0, 0, 255);
+	blueItem->changeAction = &OnDayLight_BlueChange;
+
+	auto blueStrItem = new VerticalMenuItemPercent("Blue Str S", 0, 1);
+	blueStrItem->changeAction = &OnDayLight_BlueStrengthChange;
+
+	auto ccItem = new VerticalMenuItemCancelConfirm();
+
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)redItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)redStrItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)greenItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)greenStrItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)blueItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)blueStrItem);
+	dayLightMenu->AddMenuItem((VerticalMenuItem*)ccItem);
+
+	program->menuScreenStack->Push((MenuScreen*)dayLightMenu);
+	program->RefreshScreen();
 }
 
 void OnDateTime_YearChange(FishLightProgram* program, int8_t index)
@@ -173,4 +240,46 @@ void OnDisplay_BacklightConfirm(FishLightProgram* program, int8_t index)
 void OnDisplay_BacklightCancel(FishLightProgram* program, int8_t index)
 {
 	analogWrite(PIN_CP_BACKLIGHT, program->ControlPanelSettings()->backlightAsPinValue());
+}
+
+void OnDayLight_RedChange(FishLightProgram* program, int8_t index)
+{
+	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	uint8_t r = ((VerticalMenuItemIntRange*)menu->Items()->Get(index))->Value();
+	program->DayColor()->SetR(r);
+}
+
+void OnDayLight_RedStrengthChange(FishLightProgram* program, int8_t index)
+{
+	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	uint8_t rStr = ((VerticalMenuItemIntRange*)menu->Items()->Get(index))->Value();
+	program->DayColor()->rStr = rStr;
+}
+
+void OnDayLight_GreenChange(FishLightProgram* program, int8_t index)
+{
+	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	uint8_t g = ((VerticalMenuItemIntRange*)menu->Items()->Get(index))->Value();
+	program->DayColor()->SetG(g);
+}
+
+void OnDayLight_GreenStrengthChange(FishLightProgram* program, int8_t index)
+{
+	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	uint8_t gStr = ((VerticalMenuItemIntRange*)menu->Items()->Get(index))->Value();
+	program->DayColor()->gStr = gStr;
+}
+
+void OnDayLight_BlueChange(FishLightProgram* program, int8_t index)
+{
+	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	uint8_t b = ((VerticalMenuItemIntRange*)menu->Items()->Get(index))->Value();
+	program->DayColor()->SetB(b);
+}
+
+void OnDayLight_BlueStrengthChange(FishLightProgram* program, int8_t index)
+{
+	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
+	uint8_t bStr = ((VerticalMenuItemIntRange*)menu->Items()->Get(index))->Value();
+	program->DayColor()->bStr = bStr;
 }

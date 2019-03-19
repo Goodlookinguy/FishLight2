@@ -1,25 +1,26 @@
 
+#include "EEPROMData.h"
 #include "FishLightProgram.h"
 /*DS3231  rtc(SDA, SCL);
 Time  t;
 Time oldt;
 int temp;
 int oldtemp;*/
-int32_t time;
+uint64_t ramTime; // remove this when compiling for reals dawg
 
 void setup()
 {
 	FishLightProgram::Instance()->Init();
-	time = millis();
+	ramTime = millis();
 }
 
 void loop()
 {
 	FishLightProgram::Instance()->Update();
 
-	if (millis() - time >= 1000)
+	if (millis() - ramTime >= 1000UL)
 	{
-		time = millis();
+		ramTime = millis();
 		//Serial.print("Free RAM: ");
 		//Serial.println(freeRam());
 	}

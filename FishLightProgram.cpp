@@ -36,7 +36,7 @@ void FishLightProgram::Init()
 {
 	// first
 	pinMode(PIN_BUTTONS, INPUT_PULLUP); // neccessary
-	Serial.begin(9600);
+	//Serial.begin(9600);
 
 	// load up settings from EEPROM
 	m_displaySettings = new DisplaySettings();
@@ -81,6 +81,7 @@ void FishLightProgram::Init()
 		initEEPROM();
 
 	//loadSettings();
+	restoreLight();
 	makeMainMenu();
 	RefreshScreen();
 }
@@ -117,40 +118,66 @@ void FishLightProgram::Update()
 	}
 }
 
+void FishLightProgram::restoreLight()
+{
+	// 22 <= x <= 6 = night
+	// 10 <= x <= 20:30 day
+	bool bfalse = false;
+	auto rtc = this->m_realTimeClock;
+	uint8_t hour = rtc->getHour(bfalse, bfalse);
+	uint8_t min = rtc->getMinute();
+
+	if (hour >= 22 || hour < 6)
+	{
+		analogWrite(PIN_WHITE_LEDS, m_nightColor->W());
+		analogWrite(PIN_RBG_LEDS_RED, m_nightColor->R());
+		analogWrite(PIN_RBG_LEDS_GREEN, m_nightColor->G());
+		analogWrite(PIN_RBG_LEDS_BLUE, m_nightColor->B());
+	}
+	else if (hour >= 10 || (hour >= 20 && min < 30))
+	{
+		analogWrite(PIN_WHITE_LEDS, m_dayColor->W());
+		analogWrite(PIN_RBG_LEDS_RED, m_dayColor->R());
+		analogWrite(PIN_RBG_LEDS_GREEN, m_dayColor->G());
+		analogWrite(PIN_RBG_LEDS_BLUE, m_dayColor->B());
+	}
+}
+
 void FishLightProgram::updateLight()
 {
 	bool bfalse = false;
 	auto rtc = this->m_realTimeClock;
 	uint8_t hour = rtc->getHour(bfalse, bfalse);
-	uint8_t min = rtc->getMinute();
-	uint8_t sec = rtc->getSecond();
 	
 	if ((hour >= 6 && hour <= 10) || (hour >= 20 && hour <= 22))
 	{
+		uint8_t min = rtc->getMinute();
+		uint8_t sec = rtc->getSecond();
+
 		// derp
 		if (hour == 6 || (hour == 7 && min < 30))
 		{
 			double p = Math<double>::Clamp((((hour - 6) * 60 * 60) + min * 60 + sec) / (60.0 * 90.0), 0.0, 1.0);
-			analogWrite(PIN_WHITE_LEDS, Math<uint8_t>::Lerp(m_nightColor->w, m_morningColor->w, p));
-			analogWrite(PIN_RBG_LEDS_RED, Math<uint8_t>::Lerp(m_nightColor->r, m_morningColor->r, p));
-			analogWrite(PIN_RBG_LEDS_GREEN, Math<uint8_t>::Lerp(m_nightColor->g, m_morningColor->g, p));
-			analogWrite(PIN_RBG_LEDS_BLUE, Math<uint8_t>::Lerp(m_nightColor->b, m_morningColor->b, p));
+			analogWrite(PIN_WHITE_LEDS, Math<uint8_t>::Lerp(m_nightColor->W(), m_morningColor->W(), p));
+			analogWrite(PIN_RBG_LEDS_RED, Math<uint8_t>::Lerp(m_nightColor->R(), m_morningColor->R(), p));
+			analogWrite(PIN_RBG_LEDS_GREEN, Math<uint8_t>::Lerp(m_nightColor->G(), m_morningColor->G(), p));
+			analogWrite(PIN_RBG_LEDS_BLUE, Math<uint8_t>::Lerp(m_nightColor->B(), m_morningColor->B(), p));
 		}
 		else if ((hour == 7 && min >= 30) || hour == 8 || hour == 9 || (hour == 10 && min == 0 && sec <= 5))
 		{
 			double p = Math<double>::Clamp((((hour - 7) * 60 * 60) + (min - 30) * 60 + sec) / (60.0 * 150.0), 0.0, 1.0);
-			analogWrite(PIN_WHITE_LEDS, Math<uint8_t>::Lerp(m_morningColor->w, m_dayColor->w, p));
-			analogWrite(PIN_RBG_LEDS_RED, Math<uint8_t>::Lerp(m_morningColor->r, m_dayColor->r, p));
-			analogWrite(PIN_RBG_LEDS_GREEN, Math<uint8_t>::Lerp(m_morningColor->g, m_dayColor->g, p));
-			analogWrite(PIN_RBG_LEDS_BLUE, Math<uint8_t>::Lerp(m_morningColor->b, m_dayColor->b, p));
+			analogWrite(PIN_WHITE_LEDS, Math<uint8_t>::Lerp(m_morningColor->W(), m_dayColor->W(), p));
+			analogWrite(PIN_RBG_LEDS_RED, Math<uint8_t>::Lerp(m_morningColor->R(), m_dayColor->R(), p));
+			analogWrite(PIN_RBG_LEDS_GREEN, Math<uint8_t>::Lerp(m_morningColor->G(), m_dayColor->G(), p));
+			analogWrite(PIN_RBG_LEDS_BLUE, Math<uint8_t>::Lerp(m_morningColor->B(), m_dayColor->B(), p));
 		}
 		else if ((hour == 20 && min >= 30) || hour == 21 || (hour == 22 && min == 0 && sec <= 5))
 		{
 			double p = Math<double>::Clamp((((hour - 20) * 60 * 60) + (min - 30) * 60 + sec) / (60.0 * 90.0), 0.0, 1.0);
-			analogWrite(PIN_WHITE_LEDS, Math<uint8_t>::Lerp(m_dayColor->w, m_nightColor->w, p));
-			analogWrite(PIN_RBG_LEDS_RED, Math<uint8_t>::Lerp(m_dayColor->r, m_nightColor->r, p));
-			analogWrite(PIN_RBG_LEDS_GREEN, Math<uint8_t>::Lerp(m_dayColor->g, m_nightColor->g, p));
-			analogWrite(PIN_RBG_LEDS_BLUE, Math<uint8_t>::Lerp(m_dayColor->b, m_nightColor->b, p));
+			analogWrite(PIN_WHITE_LEDS, Math<uint8_t>::Lerp(m_dayColor->W(), m_nightColor->W(), p));
+			analogWrite(PIN_RBG_LEDS_RED, Math<uint8_t>::Lerp(m_dayColor->R(), m_nightColor->R(), p));
+			analogWrite(PIN_RBG_LEDS_GREEN, Math<uint8_t>::Lerp(m_dayColor->G(), m_nightColor->G(), p));
+			analogWrite(PIN_RBG_LEDS_BLUE, Math<uint8_t>::Lerp(m_dayColor->B(), m_nightColor->B(), p));
 		}
 	}
 }
@@ -236,6 +263,7 @@ void FishLightProgram::makeMainMenu()
 	colorAnim->hertz = 8;
 	auto colorItem = new MainMenuItem("Color Balance");
 	colorItem->animation = colorAnim;
+	colorItem->enterAction = &OnMainMenu_ColorBalanceEnter;
 
 	// Add items
 	mainMenu->AddMenuItem(clockItem);

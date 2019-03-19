@@ -17,6 +17,7 @@ class VerticalMenuItemPercent : public VerticalMenuItem
 public:
 	int8_t percent{ 0 };
 	int8_t incrementalChange{ 5 };
+	int8_t initPercent{ 0 };
 
 	VerticalMenuItemPercent(const String& name, int8_t percent);
 	VerticalMenuItemPercent(const String& name, int8_t percent, int8_t incrementalChange);

@@ -15,6 +15,7 @@
 
 class VerticalMenuItemIntRange : public VerticalMenuItem
 {
+	int16_t m_initValue{ 0 };
 	int16_t m_value{ 0 };
 	int16_t m_min{ 0 };
 	int16_t m_max{ 0 };
@@ -41,6 +42,12 @@ public:
 	void Value(int16_t value)
 	{
 		this->m_value = Math<int16_t>::Clamp(value, this->m_min, this->m_max);
+	}
+
+	int16_t InitValue() const { return this->m_initValue; }
+	void InitValue(int16_t initValue)
+	{
+		this->m_initValue = Math<int16_t>::Clamp(initValue, this->m_min, this->m_max);
 	}
 
 	void DrawToScreen(FishLightProgram* program, VerticalMenuScreen* screen, bool isSelected) override;

@@ -11,6 +11,7 @@ VerticalMenuItemIntRange::VerticalMenuItemIntRange(const String& name, int16_t i
 	this->m_min = min;
 	this->m_max = max;
 	this->m_value = initValue;
+	this->m_initValue = initValue;
 }
 
 void VerticalMenuItemIntRange::DrawToScreen(FishLightProgram* program, VerticalMenuScreen* screen, bool isSelected)

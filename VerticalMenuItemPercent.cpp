@@ -9,11 +9,13 @@
 VerticalMenuItemPercent::VerticalMenuItemPercent(const String& name, const int8_t percent) : VerticalMenuItem(name)
 {
 	this->percent = percent;
+	this->initPercent = percent;
 }
 
 VerticalMenuItemPercent::VerticalMenuItemPercent(const String& name, const int8_t percent, const int8_t incrementalChange) : VerticalMenuItem(name)
 {
 	this->percent = percent;
+	this->initPercent = percent;
 	this->incrementalChange = incrementalChange;
 }
 

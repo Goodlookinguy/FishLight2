@@ -36,13 +36,14 @@ protected:
 	bool m_screenOff{ false };
 
 	const uint64_t idleTimeToScreenShutoff{ 1000ULL * 60ULL };
-	uint64_t startTime = 0;
+	uint64_t startTime{ 0 };
 
 	void makeMainMenu();
 	void initEEPROM();
 	void loadSettings();
 
 	void updateLight();
+	void restoreLight();
 
 public:
 	TinyArray<MenuScreen*>* menuScreenStack{ new TinyArray<MenuScreen*>(5, true) };
@@ -53,6 +54,11 @@ public:
 	LiquidCrystal* ControlPanel() const { return this->m_controlPanel; }
 	DS3231* RealTimeClock() const { return this->m_realTimeClock; }
 	DisplaySettings* ControlPanelSettings() const { return this->m_displaySettings; }
+
+	Color* MorningColor() { return this->m_morningColor; }
+	Color* DayColor() { return this->m_dayColor; }
+	Color* EveningColor() { return this->m_eveningColor; }
+	Color* NightColor() { return this->m_nightColor; }
 
 	void Init();
 	void Update();

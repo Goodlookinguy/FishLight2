@@ -15,6 +15,7 @@
 
 class VerticalMenuItemOptions : public VerticalMenuItem
 {
+	int8_t m_initSelectedIndex{ 0 };
 	int8_t m_selectedIndex{ 0 };
 	TinyArray<String>* m_displayValueItems{ nullptr };
 	TinyArray<int8_t>* m_valueItems{ nullptr };
@@ -27,6 +28,24 @@ public:
 	String Value() { return this->m_displayValueItems->Get(this->m_selectedIndex); }
 	int8_t ValueIndex() { return m_selectedIndex; }
 	void ValueIndex(int8_t index) { this->m_selectedIndex = index; }
+
+	String InitValue() { return this->m_displayValueItems->Get(this->m_initSelectedIndex); }
+	void InitValue(String initValue)
+	{
+		for (uint8_t i = 0; i < this->m_valueItems->Length(); ++i)
+		{
+			if (this->m_displayValueItems->Get(i) == initValue)
+			{
+				this->m_initSelectedIndex = i;
+				break;
+			}
+		}
+	}
+	int8_t InitValueIndex() { return this->m_initSelectedIndex; }
+	void InitValueIndex(int8_t initIndex)
+	{
+		this->m_initSelectedIndex = initIndex;
+	}
 
 	void DrawToScreen(FishLightProgram* program, VerticalMenuScreen* screen, bool isSelected) override;
 
