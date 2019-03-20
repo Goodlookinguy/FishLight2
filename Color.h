@@ -82,6 +82,11 @@ public:
 		this->b = b;
 	}
 
+	void SetW(uint8_t w)
+	{
+		this->w = w;
+	}
+
 	static Color* PureWhite()
 	{
 		return new Color(0, 0, 0, 255);

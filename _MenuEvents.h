@@ -14,8 +14,8 @@
 // Main Menu Events
 void OnMainMenu_DateTimeEnter(FishLightProgram* program, int8_t index);
 void OnMainMenu_DisplayEnter(FishLightProgram* program, int8_t index);
+void OnMainMenu_MorningEnter(FishLightProgram* program, int8_t index);
 void OnMainMenu_DayLightEnter(FishLightProgram* program, int8_t index);
-void OnMainMenu_ColorBalanceEnter(FishLightProgram* program, int8_t index);
 
 // Date Time Menu Events
 void OnDateTime_YearChange(FishLightProgram* program, int8_t index);
@@ -29,14 +29,16 @@ void OnDisplay_BacklightChange(FishLightProgram* program, int8_t index);
 void OnDisplay_BacklightConfirm(FishLightProgram* program, int8_t index);
 void OnDisplay_BacklightCancel(FishLightProgram* program, int8_t index);
 
-// Day Light Events
+// Light Events
+void CreateLightColorMenu(FishLightProgram* program, void* tag);
 void OnDayLight_TimeStart(FishLightProgram* program, int8_t index);
-void OnDayLight_RedChange(FishLightProgram* program, int8_t index);
-void OnDayLight_RedStrengthChange(FishLightProgram* program, int8_t index);
-void OnDayLight_GreenChange(FishLightProgram* program, int8_t index);
-void OnDayLight_GreenStrengthChange(FishLightProgram* program, int8_t index);
-void OnDayLight_BlueChange(FishLightProgram* program, int8_t index);
-void OnDayLight_BlueStrengthChange(FishLightProgram* program, int8_t index);
+void OnRedChange(FishLightProgram* program, int8_t index);
+void OnRedStrengthChange(FishLightProgram* program, int8_t index);
+void OnGreenChange(FishLightProgram* program, int8_t index);
+void OnGreenStrengthChange(FishLightProgram* program, int8_t index);
+void OnBlueChange(FishLightProgram* program, int8_t index);
+void OnBlueStrengthChange(FishLightProgram* program, int8_t index);
+void OnWhiteChange(FishLightProgram* program, int8_t index);
 
 #endif
 

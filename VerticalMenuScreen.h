@@ -19,10 +19,12 @@
 class VerticalMenuScreen : MenuScreen
 {
 	int8_t m_selectedIndex{ 0 };
-	TinyArray<VerticalMenuItem*>* m_items{ new TinyArray<VerticalMenuItem*>(7) };
+	TinyArray<VerticalMenuItem*>* m_items{ new TinyArray<VerticalMenuItem*>(12) };
 	int8_t m_delayedAction{ 0 };
 
 public:
+	void* Tag{ nullptr };
+
 	VerticalMenuScreen();
 	virtual ~VerticalMenuScreen();
 

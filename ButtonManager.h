@@ -44,7 +44,7 @@ protected:
 	uint64_t LastButtonActivateTime = 0;
 	const uint16_t SameButtonRegisterWaitTime = 370; // Should be a fairly low value
 	const uint16_t m_coolDownTime{ 120 };
-	const uint8_t RegisterTime = 7; // Should be a very low value
+	const uint8_t RegisterTime = 10; // Should be a very low value
 	Button LastButtonPressed = Button::None;
 
 	static bool InRange(int32_t value, int32_t low, int32_t high);

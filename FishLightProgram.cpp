@@ -211,6 +211,12 @@ void FishLightProgram::RemoveTopScreen()
 	this->m_popTopScreen = true;
 }
 
+void FishLightProgram::RefreshLight()
+{
+	restoreLight();
+	updateLight();
+}
+
 void FishLightProgram::makeMainMenu()
 {
 	auto mainMenu = new MainMenuScreen();
@@ -249,27 +255,27 @@ void FishLightProgram::makeMainMenu()
 	sunItem->animation = sunAnim;
 	sunItem->enterAction = &OnMainMenu_DayLightEnter;
 
-	auto colorAnim = new MenuAnimation(10);
-	colorAnim->SetFrame(0, colorA7);
-	colorAnim->SetFrame(1, colorA0);
-	colorAnim->SetFrame(2, colorA1);
-	colorAnim->SetFrame(3, colorA2);
-	colorAnim->SetFrame(4, colorA3);
-	colorAnim->SetFrame(5, colorA4);
-	colorAnim->SetFrame(6, colorA5);
-	colorAnim->SetFrame(7, colorA6);
-	colorAnim->SetFrame(8, colorA7);
-	colorAnim->SetFrame(9, colorA7);
-	colorAnim->hertz = 8;
-	auto colorItem = new MainMenuItem("Color Balance");
-	colorItem->animation = colorAnim;
-	colorItem->enterAction = &OnMainMenu_ColorBalanceEnter;
+	// Morning Settings
+	auto morningAnim = new MenuAnimation(9);
+	morningAnim->SetFrame(0, morningA0);
+	morningAnim->SetFrame(1, morningA1);
+	morningAnim->SetFrame(2, morningA2);
+	morningAnim->SetFrame(3, morningA3);
+	morningAnim->SetFrame(4, morningA4);
+	morningAnim->SetFrame(5, morningA5);
+	morningAnim->SetFrame(6, morningA6);
+	morningAnim->SetFrame(7, morningA7);
+	morningAnim->SetFrame(8, morningA8);
+	morningAnim->hertz = 8;
+	auto morningItem = new MainMenuItem("Morning");
+	morningItem->animation = morningAnim;
+	morningItem->enterAction = &OnMainMenu_MorningEnter;
 
 	// Add items
 	mainMenu->AddMenuItem(clockItem);
 	mainMenu->AddMenuItem(lcdItem);
+	mainMenu->AddMenuItem(morningItem);
 	mainMenu->AddMenuItem(sunItem);
-	mainMenu->AddMenuItem(colorItem);
 
 	menuScreenStack->Push((MenuScreen*)mainMenu);
 }

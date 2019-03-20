@@ -68,6 +68,8 @@ public:
 	void CancelRefreshScreen();
 	void RemoveTopScreen();
 
+	void RefreshLight();
+
 	static FishLightProgram* Instance()
 	{
 		static FishLightProgram* instance = new FishLightProgram();
