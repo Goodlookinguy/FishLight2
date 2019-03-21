@@ -17,7 +17,8 @@ VerticalMenuScreen::~VerticalMenuScreen()
 		auto item = this->m_items->Pop();
 		delete item;
 	}
-	
+
+	delete this->tag;
 	delete this->m_items;
 }
 

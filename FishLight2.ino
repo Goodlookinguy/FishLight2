@@ -1,4 +1,5 @@
 
+#include "Object.h"
 #include "FishLightProgram.h"
 /*DS3231  rtc(SDA, SCL);
 Time  t;
@@ -20,8 +21,8 @@ void loop()
 	if (millis() - ramTime >= 1000UL)
 	{
 		ramTime = millis();
-		//Serial.print("Free RAM: ");
-		//Serial.println(freeRam());
+		Serial.print("Free RAM: ");
+		Serial.println(freeRam());
 	}
 }
 

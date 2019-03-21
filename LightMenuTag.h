@@ -10,6 +10,7 @@
 #endif
 
 #include "Color.h"
+#include "Object.h"
 
 // I'll give 16 bytes to each color, even though they only need 7.
 // Morning Color = 64-79
@@ -17,7 +18,7 @@
 // Evening Color = 96-111
 // Night Color = 112-127
 
-class LightMenuTag
+class LightMenuTag : Object
 {
 public:
 	Color* color{ nullptr };
@@ -27,6 +28,12 @@ public:
 	// 3 for RGB Strength as int8_t
 	// 1 for W
 	// 7 bytes
+
+	virtual ~LightMenuTag()
+	{
+		color = nullptr;
+		eepromAddress = 0;
+	}
 };
 
 #endif

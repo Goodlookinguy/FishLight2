@@ -15,6 +15,7 @@
 #include "TinyArray.h"
 #include "MenuScreen.h"
 #include "VerticalMenuItem.h"
+#include "Object.h"
 
 class VerticalMenuScreen : MenuScreen
 {
@@ -23,7 +24,7 @@ class VerticalMenuScreen : MenuScreen
 	int8_t m_delayedAction{ 0 };
 
 public:
-	void* tag{ nullptr };
+	Object* tag{ nullptr };
 
 	VerticalMenuScreen();
 	virtual ~VerticalMenuScreen();

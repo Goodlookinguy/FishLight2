@@ -11,6 +11,7 @@
 #include "DisplayIdleScreen.h"
 #include "VerticalMenuItemOptions.h"
 #include "LuzDateTime.h"
+#include "Object.h"
 #include "LightMenuTag.h"
 
 //TODO: Retrieve values from EEPROM to load up default values otherwise it's like constantly resetting
@@ -121,7 +122,7 @@ void OnMainMenu_DayLightEnter(FishLightProgram* program, int8_t index)
 void CreateLightColorMenu(FishLightProgram* program, LightMenuTag* tag)
 {
 	auto dayLightMenu = new VerticalMenuScreen();
-	dayLightMenu->tag = (void*)tag;
+	dayLightMenu->tag = (Object*)tag;
 
 	//auto timeStartHourItem = new VerticalMenuItemIntRange("Hour Start", 0, 0, 23);
 	//auto timeStartMinItem = new VerticalMenuItemIntRange("Min Start", 0, 0, 59);

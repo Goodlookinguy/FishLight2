@@ -36,7 +36,7 @@ void FishLightProgram::Init()
 {
 	// first
 	pinMode(PIN_BUTTONS, INPUT_PULLUP); // neccessary
-	//Serial.begin(9600);
+	Serial.begin(9600);
 
 	// load up settings from EEPROM
 	m_displaySettings = new DisplaySettings();
@@ -257,25 +257,50 @@ void FishLightProgram::makeMainMenu()
 
 	// Morning Settings
 	auto morningAnim = new MenuAnimation(9);
-	morningAnim->SetFrame(0, morningA0);
-	morningAnim->SetFrame(1, morningA1);
-	morningAnim->SetFrame(2, morningA2);
-	morningAnim->SetFrame(3, morningA3);
-	morningAnim->SetFrame(4, morningA4);
-	morningAnim->SetFrame(5, morningA5);
-	morningAnim->SetFrame(6, morningA6);
-	morningAnim->SetFrame(7, morningA7);
-	morningAnim->SetFrame(8, morningA8);
+	morningAnim->SetFrame(0, morningA4);
+	morningAnim->SetFrame(1, morningA5);
+	morningAnim->SetFrame(2, morningA6);
+	morningAnim->SetFrame(3, morningA7);
+	morningAnim->SetFrame(4, morningA8);
+	morningAnim->SetFrame(5, morningA0);
+	morningAnim->SetFrame(6, morningA1);
+	morningAnim->SetFrame(7, morningA2);
+	morningAnim->SetFrame(8, morningA3);
 	morningAnim->hertz = 8;
 	auto morningItem = new MainMenuItem("Morning");
 	morningItem->animation = morningAnim;
 	morningItem->enterAction = &OnMainMenu_MorningEnter;
+
+	auto eveningAnim = new MenuAnimation(5);
+	eveningAnim->SetFrame(0, eveningA0);
+	eveningAnim->SetFrame(1, eveningA1);
+	eveningAnim->SetFrame(2, eveningA2);
+	eveningAnim->SetFrame(3, eveningA3);
+	eveningAnim->SetFrame(4, eveningA4);
+	eveningAnim->hertz = 6;
+	auto eveningItem = new MainMenuItem("Evening");
+	eveningItem->animation = eveningAnim;
+	//eveningItem->enterAction = &OnMainMenu_EveningEnter;
+
+	auto nightAnim = new MenuAnimation(6);
+	nightAnim->SetFrame(0, nightA2);
+	nightAnim->SetFrame(1, nightA3);
+	nightAnim->SetFrame(2, nightA4);
+	nightAnim->SetFrame(3, eveningA4);
+	nightAnim->SetFrame(4, nightA0);
+	nightAnim->SetFrame(5, nightA1);
+	nightAnim->hertz = 10;
+	auto nightItem = new MainMenuItem("Night");
+	nightItem->animation = nightAnim;
+	//nightItem->enterAction = &OnMainMenu_NightEnter;
 
 	// Add items
 	mainMenu->AddMenuItem(clockItem);
 	mainMenu->AddMenuItem(lcdItem);
 	mainMenu->AddMenuItem(morningItem);
 	mainMenu->AddMenuItem(sunItem);
+	mainMenu->AddMenuItem(eveningItem);
+	mainMenu->AddMenuItem(nightItem);
 
 	menuScreenStack->Push((MenuScreen*)mainMenu);
 }
