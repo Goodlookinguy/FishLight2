@@ -280,7 +280,7 @@ void FishLightProgram::makeMainMenu()
 	eveningAnim->hertz = 6;
 	auto eveningItem = new MainMenuItem("Evening");
 	eveningItem->animation = eveningAnim;
-	//eveningItem->enterAction = &OnMainMenu_EveningEnter;
+	eveningItem->enterAction = &OnMainMenu_EveningEnter;
 
 	auto nightAnim = new MenuAnimation(6);
 	nightAnim->SetFrame(0, nightA2);
@@ -289,10 +289,10 @@ void FishLightProgram::makeMainMenu()
 	nightAnim->SetFrame(3, eveningA4);
 	nightAnim->SetFrame(4, nightA0);
 	nightAnim->SetFrame(5, nightA1);
-	nightAnim->hertz = 10;
+	nightAnim->hertz = 9;
 	auto nightItem = new MainMenuItem("Night");
 	nightItem->animation = nightAnim;
-	//nightItem->enterAction = &OnMainMenu_NightEnter;
+	nightItem->enterAction = &OnMainMenu_NightEnter;
 
 	// Add items
 	mainMenu->AddMenuItem(clockItem);

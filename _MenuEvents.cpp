@@ -109,6 +109,7 @@ void OnMainMenu_MorningEnter(FishLightProgram* program, int8_t index)
 {
 	auto tag = new LightMenuTag();
 	tag->color = program->MorningColor();
+	tag->eepromAddress = 64;
 	CreateLightColorMenu(program, tag);
 }
 
@@ -116,6 +117,23 @@ void OnMainMenu_DayLightEnter(FishLightProgram* program, int8_t index)
 {
 	auto tag = new LightMenuTag();
 	tag->color = program->DayColor();
+	tag->eepromAddress = 80;
+	CreateLightColorMenu(program, tag);
+}
+
+void OnMainMenu_EveningEnter(FishLightProgram * program, int8_t index)
+{
+	auto tag = new LightMenuTag();
+	tag->color = program->EveningColor();
+	tag->eepromAddress = 96;
+	CreateLightColorMenu(program, tag);
+}
+
+void OnMainMenu_NightEnter(FishLightProgram * program, int8_t index)
+{
+	auto tag = new LightMenuTag();
+	tag->color = program->NightColor();
+	tag->eepromAddress = 112;
 	CreateLightColorMenu(program, tag);
 }
 
