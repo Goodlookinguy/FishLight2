@@ -107,43 +107,43 @@ void OnMainMenu_DisplayEnter(FishLightProgram* program, int8_t index)
 void OnMainMenu_MorningEnter(FishLightProgram* program, int8_t index)
 {
 	auto tag = new LightMenuTag();
-	tag->Color = program->MorningColor();
-	CreateLightColorMenu(program, (void*)tag);
+	tag->color = program->MorningColor();
+	CreateLightColorMenu(program, tag);
 }
 
 void OnMainMenu_DayLightEnter(FishLightProgram* program, int8_t index)
 {
 	auto tag = new LightMenuTag();
-	tag->Color = program->DayColor();
-	CreateLightColorMenu(program, (void*)tag);
+	tag->color = program->DayColor();
+	CreateLightColorMenu(program, tag);
 }
 
-void CreateLightColorMenu(FishLightProgram* program, void* tag)
+void CreateLightColorMenu(FishLightProgram* program, LightMenuTag* tag)
 {
 	auto dayLightMenu = new VerticalMenuScreen();
-	dayLightMenu->Tag = tag;
+	dayLightMenu->tag = (void*)tag;
 
 	//auto timeStartHourItem = new VerticalMenuItemIntRange("Hour Start", 0, 0, 23);
 	//auto timeStartMinItem = new VerticalMenuItemIntRange("Min Start", 0, 0, 59);
-	auto redItem = new VerticalMenuItemIntRange("Red", 0, 0, 255);
+	auto redItem = new VerticalMenuItemIntRange("Red", tag->color->R(), 0, 255);
 	redItem->changeAction = &OnRedChange;
 
-	auto redStrItem = new VerticalMenuItemPercent("Red Str", 0, 1);
+	auto redStrItem = new VerticalMenuItemPercent("Red Str", tag->color->rStr * 100, 1);
 	redStrItem->changeAction = &OnRedStrengthChange;
 
-	auto greenItem = new VerticalMenuItemIntRange("Green", 0, 0, 255);
+	auto greenItem = new VerticalMenuItemIntRange("Green", tag->color->G(), 0, 255);
 	greenItem->changeAction = &OnGreenChange;
 
-	auto greenStrItem = new VerticalMenuItemPercent("Green Str", 0, 1);
+	auto greenStrItem = new VerticalMenuItemPercent("Green Str", tag->color->gStr * 100, 1);
 	greenStrItem->changeAction = &OnGreenStrengthChange;
 
-	auto blueItem = new VerticalMenuItemIntRange("Blue", 0, 0, 255);
+	auto blueItem = new VerticalMenuItemIntRange("Blue", tag->color->B(), 0, 255);
 	blueItem->changeAction = &OnBlueChange;
 
-	auto blueStrItem = new VerticalMenuItemPercent("Blue Str", 0, 1);
+	auto blueStrItem = new VerticalMenuItemPercent("Blue Str", tag->color->bStr * 100, 1);
 	blueStrItem->changeAction = &OnBlueStrengthChange;
 
-	auto whiteItem = new VerticalMenuItemIntRange("White", 0, 0, 255);
+	auto whiteItem = new VerticalMenuItemIntRange("White", tag->color->W(), 0, 255);
 	whiteItem->changeAction = &OnWhiteChange;
 
 	auto ccItem = new VerticalMenuItemCancelConfirm();
@@ -228,7 +228,7 @@ void OnRedChange(FishLightProgram* program, int8_t index)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto item = (VerticalMenuItemIntRange*)menu->Items()->Get(index);
-	((LightMenuTag*)menu->Tag)->Color->SetR(item->Value());
+	((LightMenuTag*)menu->tag)->color->SetR(item->Value());
 	program->RefreshLight();
 }
 
@@ -236,7 +236,7 @@ void OnRedStrengthChange(FishLightProgram* program, int8_t index)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto item = (VerticalMenuItemPercent*)menu->Items()->Get(index);
-	((LightMenuTag*)menu->Tag)->Color->rStr = item->percent / 100.0;
+	((LightMenuTag*)menu->tag)->color->rStr = item->percent / 100.0;
 	program->RefreshLight();
 }
 
@@ -244,7 +244,7 @@ void OnGreenChange(FishLightProgram* program, int8_t index)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto item = (VerticalMenuItemIntRange*)menu->Items()->Get(index);
-	((LightMenuTag*)menu->Tag)->Color->SetG(item->Value());
+	((LightMenuTag*)menu->tag)->color->SetG(item->Value());
 	program->RefreshLight();
 }
 
@@ -252,7 +252,7 @@ void OnGreenStrengthChange(FishLightProgram* program, int8_t index)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto item = (VerticalMenuItemPercent*)menu->Items()->Get(index);
-	((LightMenuTag*)menu->Tag)->Color->gStr = item->percent / 100.0;
+	((LightMenuTag*)menu->tag)->color->gStr = item->percent / 100.0;
 	program->RefreshLight();
 }
 
@@ -260,7 +260,7 @@ void OnBlueChange(FishLightProgram* program, int8_t index)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto item = (VerticalMenuItemIntRange*)menu->Items()->Get(index);
-	((LightMenuTag*)menu->Tag)->Color->SetB(item->Value());
+	((LightMenuTag*)menu->tag)->color->SetB(item->Value());
 	program->RefreshLight();
 }
 
@@ -268,7 +268,7 @@ void OnBlueStrengthChange(FishLightProgram* program, int8_t index)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto item = (VerticalMenuItemPercent*)menu->Items()->Get(index);
-	((LightMenuTag*)menu->Tag)->Color->bStr = item->percent / 100.0;
+	((LightMenuTag*)menu->tag)->color->bStr = item->percent / 100.0;
 	program->RefreshLight();
 }
 
@@ -276,6 +276,6 @@ void OnWhiteChange(FishLightProgram* program, int8_t index)
 {
 	VerticalMenuScreen* menu = (VerticalMenuScreen*)program->menuScreenStack->Top();
 	auto item = (VerticalMenuItemIntRange*)menu->Items()->Get(index);
-	((LightMenuTag*)menu->Tag)->Color->SetW(item->Value());
+	((LightMenuTag*)menu->tag)->color->SetW(item->Value());
 	program->RefreshLight();
 }

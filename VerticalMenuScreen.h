@@ -23,7 +23,7 @@ class VerticalMenuScreen : MenuScreen
 	int8_t m_delayedAction{ 0 };
 
 public:
-	void* Tag{ nullptr };
+	void* tag{ nullptr };
 
 	VerticalMenuScreen();
 	virtual ~VerticalMenuScreen();

@@ -10,6 +10,7 @@
 //	#include "WProgram.h"
 //#endif
 #include "FishLightProgram.h"
+#include "LightMenuTag.h"
 
 // Main Menu Events
 void OnMainMenu_DateTimeEnter(FishLightProgram* program, int8_t index);
@@ -30,7 +31,7 @@ void OnDisplay_BacklightConfirm(FishLightProgram* program, int8_t index);
 void OnDisplay_BacklightCancel(FishLightProgram* program, int8_t index);
 
 // Light Events
-void CreateLightColorMenu(FishLightProgram* program, void* tag);
+void CreateLightColorMenu(FishLightProgram* program, LightMenuTag* tag);
 void OnDayLight_TimeStart(FishLightProgram* program, int8_t index);
 void OnRedChange(FishLightProgram* program, int8_t index);
 void OnRedStrengthChange(FishLightProgram* program, int8_t index);

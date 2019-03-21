@@ -21,7 +21,7 @@ class VerticalMenuItemIntRange : public VerticalMenuItem
 	int16_t m_max{ 0 };
 public:
 	int8_t incrementalChange{ 1 };
-	void* Tag{ nullptr };
+	void* tag{ nullptr };
 
 	VerticalMenuItemIntRange(const String& name, int16_t initValue, int16_t min, int16_t max);
 

@@ -18,7 +18,7 @@ public:
 	int8_t percent{ 0 };
 	int8_t incrementalChange{ 5 };
 	int8_t initPercent{ 0 };
-	void* Tag{ nullptr };
+	void* tag{ nullptr };
 
 	VerticalMenuItemPercent(const String& name, int8_t percent);
 	VerticalMenuItemPercent(const String& name, int8_t percent, int8_t incrementalChange);

@@ -14,7 +14,7 @@
 class LightMenuTag
 {
 public:
-	Color* Color;
+	Color* color;
 	// store info about where to write to EEPROM here
 };
 
