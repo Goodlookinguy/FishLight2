@@ -11,7 +11,7 @@
 #endif
 
 #include "VerticalMenuItem.h"
-#include "Math.h"
+#include "LuzMath.h"
 
 class VerticalMenuItemIntRange : public VerticalMenuItem
 {

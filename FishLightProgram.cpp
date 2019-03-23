@@ -17,7 +17,7 @@
 #include <EEPROM.h>
 #include "Color.h"
 #include <Wire.h>
-#include "Math.h"
+#include "LuzMath.h"
 
 FishLightProgram::FishLightProgram()
 {

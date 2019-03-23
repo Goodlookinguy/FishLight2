@@ -3,7 +3,7 @@
 // 
 
 #include "VerticalMenuItemOptions.h"
-#include "Math.h"
+#include "LuzMath.h"
 
 VerticalMenuItemOptions::VerticalMenuItemOptions(const String& name, const uint8_t size) : VerticalMenuItem(name)
 {

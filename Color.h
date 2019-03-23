@@ -10,7 +10,7 @@
 	#include "WProgram.h"
 #endif
 
-#include "Math.h"
+#include "LuzMath.h"
 
 class Color
 {

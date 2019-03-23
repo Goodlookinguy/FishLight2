@@ -2,7 +2,7 @@
 // 
 // 
 
-#include "Math.h"
+#include "LuzMath.h"
 #include "VerticalMenuItemPercent.h"
 #include "VerticalMenuScreen.h"
 

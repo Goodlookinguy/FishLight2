@@ -1,7 +1,7 @@
 // Math.h
 
-#ifndef _MATH_h
-#define _MATH_h
+#ifndef _LUZMATH_h
+#define _LUZMATH_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "Arduino.h"

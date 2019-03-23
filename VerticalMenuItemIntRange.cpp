@@ -3,7 +3,7 @@
 // 
 
 #include "VerticalMenuItemIntRange.h"
-#include "Math.h"
+#include "LuzMath.h"
 
 
 VerticalMenuItemIntRange::VerticalMenuItemIntRange(const String& name, int16_t initValue, int16_t min, int16_t max) : VerticalMenuItem(name)

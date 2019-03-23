@@ -4,7 +4,7 @@
 
 #include "VerticalMenuScreen.h"
 #include "Button.h"
-#include "Math.h"
+#include "LuzMath.h"
 
 VerticalMenuScreen::VerticalMenuScreen() : MenuScreen()
 {
