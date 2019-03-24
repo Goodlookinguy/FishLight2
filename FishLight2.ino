@@ -1,5 +1,4 @@
 
-#include "Object.h"
 #include "FishLightProgram.h"
 /*DS3231  rtc(SDA, SCL);
 Time  t;
@@ -7,6 +6,14 @@ Time oldt;
 int temp;
 int oldtemp;*/
 uint64_t ramTime; // remove this when compiling for reals dawg
+
+//https://learn.adafruit.com/memories-of-an-arduino/measuring-free-memory
+int freeRam()
+{
+	extern int __heap_start, *__brkval;
+	int v;
+	return (int)&v - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
+}
 
 void setup()
 {
@@ -24,15 +31,6 @@ void loop()
 		Serial.print("Free RAM: ");
 		Serial.println(freeRam());
 	}
-}
-
-
-//https://learn.adafruit.com/memories-of-an-arduino/measuring-free-memory
-int freeRam()
-{
-	extern int __heap_start, *__brkval;
-	int v;
-	return (int)&v - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
 }
 
 

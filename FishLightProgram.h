@@ -46,7 +46,7 @@ protected:
 	void restoreLight();
 
 public:
-	TinyArray<MenuScreen*>* menuScreenStack{ new TinyArray<MenuScreen*>(5, true) };
+	TinyArray<MenuScreen*>* menuScreenStack{ new TinyArray<MenuScreen*>(3, true) };
 
 	FishLightProgram();
 	~FishLightProgram();
